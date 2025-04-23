@@ -1,5 +1,8 @@
 using Unity.Burst.CompilerServices;
 
+/**
+* Static constant values for provide values
+*/
 public class DamageAreas
 {
     public static string STANDARD_ENEMY_DAMAGE_AREA = "StandartEnemyDamageArea";

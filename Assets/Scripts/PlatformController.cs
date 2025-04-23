@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlatformController : MonoBehaviour
 {
+    [SerializeField] private GameController gameController;
     private Vector3 platformGroundPosition;
     private Vector3 platformTopPosition;
 
@@ -37,6 +38,11 @@ public class PlatformController : MonoBehaviour
             case AnimationState.AwaitTakeoff:
                 // Bekleme durumları, hareket yok
                 break;
+        }
+
+        if (gameController.IsGameStart())
+        {
+            this.animationState = AnimationState.Takeoff;
         }
     }
 

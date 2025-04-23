@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /**
@@ -22,6 +23,8 @@ public class WaveSpawnController : MonoBehaviour
     // Debug options
     public bool debugMode = true;
     public bool skipDoorAnimation = false; // Set to true to bypass door animation issues
+
+    private bool isGameStarted = false;
 
     void Start()
     {
@@ -54,8 +57,15 @@ public class WaveSpawnController : MonoBehaviour
                 Debug.LogError("GameController not found!");
         }
 
-        // Start direct spawning test
-        StartCoroutine(BeginSpawning());
+    }
+
+    public void Update()
+    {
+        if (this.gameController.IsGameStart() && !isGameStarted)
+        {
+            isGameStarted = true;
+            StartCoroutine(BeginSpawning());
+        }
     }
 
     IEnumerator BeginSpawning()
@@ -63,15 +73,10 @@ public class WaveSpawnController : MonoBehaviour
         Debug.Log("Starting wave spawning in " + timeBetweenWaves + " seconds...");
         yield return new WaitForSeconds(timeBetweenWaves);
 
-        // Start with a single test enemy
-        Debug.Log("Spawning test enemy");
-        SpawnSingleEnemy();
-
-        yield return new WaitForSeconds(2.0f);
-
         // Start actual wave system if test was successful
         Debug.Log("Starting wave 1");
         StartCoroutine(SpawnWave(1));
+
     }
 
     IEnumerator SpawnWave(int waveNumber)
