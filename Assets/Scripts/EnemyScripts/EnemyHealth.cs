@@ -4,7 +4,7 @@ public class EnemyHealth
     private bool isEnemyAlive;
     public EnemyHealth()
     {
-        this.enemyHealth = 100f;
+        this.enemyHealth = 50f;
         this.isEnemyAlive = this.enemyHealth >= 0;
     }
 

@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
     {
         if (playerTransform != null)
         {
-            Vector3 destination = playerTransform.position + Vector3.Normalize(this.transform.position - playerTransform.position)*5f;            
+            Vector3 destination = playerTransform.position + Vector3.Normalize(this.transform.position - playerTransform.position)*1.6f;            
             navMeshAgent.SetDestination(destination);
         }
 

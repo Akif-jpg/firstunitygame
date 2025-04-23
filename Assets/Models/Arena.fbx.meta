@@ -3,7 +3,27 @@ guid: ffc0d03a53e79d828a7450e20b1f194f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ColorAtlas
+    second: {fileID: 2100000, guid: d689b8101d8a231189f902dc3ec6739e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: glass
+    second: {fileID: 2100000, guid: 4e8f8c38889c47eb5932e38526894230, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: light
+    second: {fileID: 2100000, guid: a227a47dc74181cde824580dbdc46c57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: teleportEnergy
+    second: {fileID: 2100000, guid: aa68f77dd97e07e8ca486599fffab240, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
