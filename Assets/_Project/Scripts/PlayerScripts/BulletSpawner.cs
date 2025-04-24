@@ -6,7 +6,6 @@ public class BulletSpawner : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
-    public Transform firePoint;
     public ParticleSystem muzzleEffect;
     private Animator animator;
 
@@ -17,8 +16,7 @@ public class BulletSpawner : MonoBehaviour
     }
     void Update()
     {
-        firePoint = this.transform;
-
+        
         if (Input.GetMouseButtonDown(0))
         {
             SpawnBullet();
@@ -33,8 +31,8 @@ public class BulletSpawner : MonoBehaviour
     }
     void SpawnBullet()
     {
-        Vector3 spawnPosition = firePoint != null ? firePoint.position : transform.position;
-        Quaternion spawnRotation = firePoint != null ? firePoint.rotation : transform.rotation;
+        Vector3 spawnPosition = transform.position;
+        Quaternion spawnRotation = transform.rotation;
 
         GameObject bullet = Instantiate(bulletPrefab, spawnPosition, spawnRotation);
 

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1416977125887134028}
   - component: {fileID: 155568708581447517}
   - component: {fileID: 9023179833246743929}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BulletSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9014691405219620520}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99840295, z: -0, w: 0.056493647}
+  m_LocalRotation: {x: 0, y: 0.9984031, z: 0, w: 0.056492567}
   m_LocalPosition: {x: 0.02, y: 0.17, z: -2.07}
-  m_LocalScale: {x: 0.08306902, y: 0.061628476, z: 0.14275092}
+  m_LocalScale: {x: 0.024886647, y: 0.027280297, z: 0.022840146}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 173.523, z: 0}
 --- !u!114 &1180077131877520671
 MonoBehaviour:
   m_ObjectHideFlags: 0
