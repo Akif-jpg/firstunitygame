@@ -6,6 +6,7 @@ TagManager:
   tags:
   - StandartEnemyDamageArea
   - Bullet
+  - StandartEnemy
   layers:
   - Default
   - TransparentFX

@@ -24,7 +24,7 @@ public class WaveSpawnController : MonoBehaviour
     public bool debugMode = true;
     public bool skipDoorAnimation = false; // Set to true to bypass door animation issues
 
-    private bool isGameStarted = false;
+    private int lastSpawnedWave = -1;
 
     void Start()
     {
@@ -61,9 +61,9 @@ public class WaveSpawnController : MonoBehaviour
 
     public void Update()
     {
-        if (this.gameController.IsGameStart() && !isGameStarted)
+        if (this.gameController.IsGameStart() && lastSpawnedWave < this.gameController.GetWaveState())
         {
-            isGameStarted = true;
+            lastSpawnedWave = this.gameController.GetWaveState();
             StartCoroutine(BeginSpawning());
         }
     }
@@ -75,13 +75,13 @@ public class WaveSpawnController : MonoBehaviour
 
         // Start actual wave system if test was successful
         Debug.Log("Starting wave 1");
-        StartCoroutine(SpawnWave(1));
+        StartCoroutine(SpawnWave(this.gameController.GetWaveState()));
 
     }
 
     IEnumerator SpawnWave(int waveNumber)
     {
-        int enemiesInWave = waveNumber * 2; // Same formula as before
+        int enemiesInWave = (waveNumber+1) * 1; // Same formula as before
         Debug.Log("Wave " + waveNumber + " started with " + enemiesInWave + " enemies");
 
         for (int i = 0; i < enemiesInWave; i++)

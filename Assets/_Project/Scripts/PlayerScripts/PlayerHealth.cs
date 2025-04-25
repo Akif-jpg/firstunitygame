@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     private bool isCharacterAlive = true;
     private float characterHealth;
-    private DamageIdProvider dIdProvider;
+
 
     // Damage following system.
     private Dictionary<string, DamageRoutine> activeRoutines = new Dictionary<string, DamageRoutine>();
@@ -16,7 +16,6 @@ public class PlayerHealth : MonoBehaviour
     {
         characterHealth = 100f;
         isCharacterAlive = true;
-        this.dIdProvider = new DamageIdProvider();
     }
 
     public bool Alive() => isCharacterAlive;
@@ -31,7 +30,6 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddDamage(float damagePerSecond, string damageId, float interval = 1f)
     {
-        damageId = this.dIdProvider.Add(damageId);
         if (activeRoutines.ContainsKey(damageId))
             return; // Zaten çalışıyorsa tekrar başlatma
 
@@ -42,13 +40,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void RemoveDamage(string damageId)
     {
-        string damageIdCopy = damageId;
-        damageId = this.dIdProvider.GetCount(damageId);
+
         if (activeRoutines.TryGetValue(damageId, out var routine))
         {
             routine.Stop(this);
             activeRoutines.Remove(damageId);
-            this.dIdProvider.Remove(damageIdCopy);
         }
     }
 

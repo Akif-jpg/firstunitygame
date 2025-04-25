@@ -72,30 +72,4 @@ public class FPSController : MonoBehaviour
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
     }
-
-    void OnTriggerEnter(Collider other)
-    {
-        string tagName = other.tag;
-
-        if (tagName == DamageAreas.STANDARD_ENEMY_DAMAGE_AREA)
-        {
-            Debug.Log("Haasr uygulanıyor");
-            // 10 DPS, 1 saniyede bir
-            healthSystem.AddDamage(DamageAreas.STANDARD_ENEMY_DAMAGE_AREA_VALUE, tagName, 1f);
-        }
-
-        Debug.Log("Enter area" + tagName);
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        string tagName = other.tag;
-
-        if (tagName == DamageAreas.STANDARD_ENEMY_DAMAGE_AREA)
-        {
-            healthSystem.RemoveDamage(tagName);
-        }
-
-        Debug.Log("Exit area" + tagName);
-    }
 }
