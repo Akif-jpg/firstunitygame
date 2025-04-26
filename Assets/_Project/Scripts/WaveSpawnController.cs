@@ -1,30 +1,29 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
-/**
-* This class spawn waves according to GameController class.
-*/
 public class WaveSpawnController : MonoBehaviour
 {
+    [Header("References")]
     public GameController gameController;
     public GameObject standardEnemy;
     public Transform spawnPoint;
     public Transform playerTransform;
+    public Animator doorAnimator; // optional
 
-    // Door animation is optional in this version
-    public Animator doorAnimator;
-    private const string DOOR_SPAWN_PARAM = "IsCharacterSpawning";
+    [Header("Timing")]
+    public float timeBetweenSpawns = 3f;
+    public float timeBetweenWaves = 5f;
 
-    // Spawn settings
-    public float timeBetweenSpawns = 3.0f;
-    public float timeBetweenWaves = 5.0f;
-
-    // Debug options
-    public bool debugMode = true;
-    public bool skipDoorAnimation = false; // Set to true to bypass door animation issues
+    [Header("Spawn Probability Settings")]
+    [Tooltip("Maximum number of enemies that can be spawned")]
+    public int maxEnemiesPerWave = 5;
+    [Tooltip("Growth factor for spawn intensity formula")]
+    public float spawnGrowthFactor = 5f;
+    [Tooltip("Minimum number of enemies to spawn in each wave")]
+    public int minEnemiesPerWave = 1;
 
     private int lastSpawnedWave = -1;
+    private const string DOOR_SPAWN_PARAM = "IsCharacterSpawning";
 
     void Start()
     {
@@ -56,46 +55,46 @@ public class WaveSpawnController : MonoBehaviour
             if (gameController == null)
                 Debug.LogError("GameController not found!");
         }
-
     }
 
-    public void Update()
+    void Update()
     {
-        if (this.gameController.IsGameStart() && lastSpawnedWave < this.gameController.GetWaveState())
+        if (gameController.IsGameStart() && lastSpawnedWave < gameController.GetWaveState())
         {
-            lastSpawnedWave = this.gameController.GetWaveState();
+            lastSpawnedWave = gameController.GetWaveState();
             StartCoroutine(BeginSpawning());
         }
     }
 
     IEnumerator BeginSpawning()
     {
-        Debug.Log("Starting wave spawning in " + timeBetweenWaves + " seconds...");
         yield return new WaitForSeconds(timeBetweenWaves);
-
-        // Start actual wave system if test was successful
-        Debug.Log("Starting wave 1");
-        StartCoroutine(SpawnWave(this.gameController.GetWaveState()));
-
+        StartCoroutine(SpawnWave(lastSpawnedWave));
     }
 
     IEnumerator SpawnWave(int waveNumber)
     {
-        int enemiesInWave = (waveNumber+1) * 1; // Same formula as before
-        Debug.Log("Wave " + waveNumber + " started with " + enemiesInWave + " enemies");
+        // 1) Calculate spawn intensity (range 0-1)
+        float intensity = (float)waveNumber / (waveNumber + spawnGrowthFactor);
+        // 2) Random value between 0-1
+        float rnd = Random.value;
+        // 3) Determine number of enemies to spawn:
+        int calculatedEnemies = Mathf.RoundToInt(rnd * intensity * maxEnemiesPerWave);
+        // 4) Ensure at least minEnemiesPerWave enemies are spawned
+        int enemiesToSpawn = Mathf.Max(calculatedEnemies, minEnemiesPerWave);
 
-        for (int i = 0; i < enemiesInWave; i++)
+        Debug.Log($"[Wave {waveNumber}] Intensity={intensity:F2}, Random={rnd:F2} => Spawning {enemiesToSpawn} enemies (min: {minEnemiesPerWave})");
+
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
             yield return new WaitForSeconds(timeBetweenSpawns);
-            SpawnSingleEnemy();
-            
+            SpawnSingleStandardEnemy();
         }
 
-        Debug.Log("Wave " + waveNumber + " completed");
-
+        Debug.Log($"Wave {waveNumber} completed with {enemiesToSpawn} enemies spawned");
     }
 
-    private void SpawnSingleEnemy()
+    private void SpawnSingleStandardEnemy()
     {
         StartCoroutine(SpawnEnemyRoutine());
     }
@@ -103,7 +102,7 @@ public class WaveSpawnController : MonoBehaviour
     IEnumerator SpawnEnemyRoutine()
     {
         // Door animation handling (optional)
-        if (doorAnimator != null && !skipDoorAnimation)
+        if (doorAnimator != null)
         {
             doorAnimator.SetBool(DOOR_SPAWN_PARAM, true);
             yield return new WaitForSeconds(1f);
@@ -148,7 +147,7 @@ public class WaveSpawnController : MonoBehaviour
         }
 
         // Close door if needed
-        if (doorAnimator != null && !skipDoorAnimation)
+        if (doorAnimator != null)
         {
             doorAnimator.SetBool(DOOR_SPAWN_PARAM, false);
             yield return new WaitForSeconds(0.5f);

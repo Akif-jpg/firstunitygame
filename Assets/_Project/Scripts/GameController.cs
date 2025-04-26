@@ -9,7 +9,6 @@ public class GameController : MonoBehaviour
 {
     [Header("Wave settings")]
     [SerializeField] private int waveState = 0;
-    [SerializeField] private int maxWaveState = 3;
 
     [Header("Check enemies area settings")]
     [Tooltip("Check enemies area for starting new round.")]
@@ -40,7 +39,6 @@ public class GameController : MonoBehaviour
         */
         this.enemyTagPattern = "^[A-Z][a-z]*Enemy$"; 
         this.waveState = 0;
-        this.maxWaveState = 3;
         this.gameState = GameState.GameStarting;
     }
 
@@ -56,21 +54,13 @@ public class GameController : MonoBehaviour
         if(enemiesInArea <= 0 && this.gameState == GameState.RoundStarted)
         {
             this.gameState = GameState.RoundOver;
-            if(this.waveState < this.maxWaveState)
-            {
-                IncreaseWaveState();
-            }
+            IncreaseWaveState();
         }
     }
 
     public int GetWaveState()
     {
         return this.waveState;
-    }
-
-    public int GetMaxWaveState()
-    {
-        return this.maxWaveState;
     }
 
     public void IncreaseWaveState()
@@ -98,7 +88,7 @@ public class GameController : MonoBehaviour
 
     public void SendSignalHitNextWave()
     {
-        if(this.gameState == GameState.RestingRange && waveState < maxWaveState)
+        if(this.gameState == GameState.RestingRange)
         {
             this.gameState = GameState.GameStarting;
         }

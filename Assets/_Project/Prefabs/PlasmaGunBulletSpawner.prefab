@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 155568708581447517}
   - component: {fileID: 9023179833246743929}
   m_Layer: 0
-  m_Name: BulletSpawner
+  m_Name: PlasmaGunBulletSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
