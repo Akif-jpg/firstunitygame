@@ -24,7 +24,8 @@ public class GameController : MonoBehaviour
         RoundStarting,
         RoundStarted,
         RoundOver,
-        RestingRange
+        RestingRange,
+        Marketplace
         
     }
 
@@ -86,11 +87,26 @@ public class GameController : MonoBehaviour
         }   
     }
 
+    // Trigger when hit to HitForNextWave box.
     public void SendSignalHitNextWave()
     {
         if(this.gameState == GameState.RestingRange)
         {
             this.gameState = GameState.GameStarting;
+        }
+
+        if(this.gameState == GameState.Marketplace)
+        {
+            this.gameState = GameState.RestingRange;
+        }
+    }
+
+    // Trigger when hit to HitForMarketplace box.
+    public void SendSignalHitMarketplace()
+    {
+        if(this.gameState == GameState.RestingRange)
+        {
+            this.gameState = GameState.Marketplace;
         }
     }
 
@@ -115,6 +131,11 @@ public class GameController : MonoBehaviour
     public bool IsRestingState()
     {
         return this.gameState == GameState.RestingRange;
+    }
+
+    public bool IsMarketingState()
+    {
+        return this.gameState == GameState.Marketplace;
     }
 
     int CheckEnemiesInArea(){

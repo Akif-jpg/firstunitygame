@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
     IEnumerator DestroyAnimation()
     {
         destroyParticle.Play();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }
 

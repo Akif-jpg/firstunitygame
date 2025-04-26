@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7496983536202106572}
   - component: {fileID: 6666142327342888453}
   - component: {fileID: 3539174968795953910}
+  - component: {fileID: 1988171560407705859}
   m_Layer: 0
   m_Name: RiffleBullet
   m_TagString: Bullet
@@ -82,6 +83,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1988171560407705859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044175367211338439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e82a317a9cce3f46ba9ef6670a83ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &78803779548185572
 PrefabInstance:
   m_ObjectHideFlags: 0

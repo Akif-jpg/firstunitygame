@@ -19,25 +19,29 @@ public class PlatformController : MonoBehaviour
 
     private Vector3 platformGroundPosition;
     private Vector3 platformTopPosition;
+    private Vector3 platformMarketplacePosition;
     private GameObject boundaryCollider;
     private enum AnimationState
     {
         Landing,
         Takeoff,
+        TakeOffToMarket,
+        LandingFromMarket,
         AwaitLanding,
-        AwaitTakeoff
+        AwaitTakeoff,
+        AwaitInMarket 
     }
 
     private AnimationState animationState;
     private float moveSpeed = 2.0f;
+    private float marketMoveSpeed = 3.0f; // Market hareketleri için farklı bir hız tanımladım
 
     void Start()
     {
         animationState = AnimationState.AwaitLanding; // Başlangıçta beklemede olabilir
         platformTopPosition = new Vector3(0, 9.2f, 0);
         platformGroundPosition = new Vector3(0, 1.0f, 0);
-
-
+        platformMarketplacePosition = new Vector3(0f, 40.83f, 0f);
     }
 
     void FixedUpdate()
@@ -50,10 +54,22 @@ public class PlatformController : MonoBehaviour
             case AnimationState.Takeoff:
                 MovePlatform(platformTopPosition, AnimationState.AwaitLanding);
                 break;
+            case AnimationState.TakeOffToMarket:
+                // Market pozisyonuna hareket
+                MovePlatformWithSpeed(platformMarketplacePosition, AnimationState.AwaitInMarket, marketMoveSpeed);
+                EnableBoundaries(true); // Market sırasında sınırları etkinleştir
+                break;
+            case AnimationState.LandingFromMarket:
+                // Marketten normal oyun alanına dönüş
+                MovePlatformWithSpeed(platformTopPosition, AnimationState.AwaitLanding, marketMoveSpeed);
+                break;
             case AnimationState.AwaitLanding:
                 break;
             case AnimationState.AwaitTakeoff:
                 EnableBoundaries(false);
+                break;
+            case AnimationState.AwaitInMarket:
+                // Market alanında bekleme durumu
                 break;
         }
 
@@ -74,11 +90,34 @@ public class PlatformController : MonoBehaviour
             this.animationState = AnimationState.Landing;
             EnableBoundaries(true);
         }
+
+        if(gameController.IsMarketingState())
+        {
+            // Eğer şu anda markette değilsek markete hareket başlat
+            if (this.animationState != AnimationState.TakeOffToMarket && 
+                this.animationState != AnimationState.AwaitInMarket)
+            {
+                this.animationState = AnimationState.TakeOffToMarket;
+            }
+        }
+        else
+        {
+            // Markette olduğumuzda market durumu biterse normal alana geri dön
+            if (this.animationState == AnimationState.AwaitInMarket)
+            {
+                this.animationState = AnimationState.LandingFromMarket;
+            }
+        }
     }
 
     private void MovePlatform(Vector3 targetPosition, AnimationState nextState)
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
+        MovePlatformWithSpeed(targetPosition, nextState, moveSpeed);
+    }
+
+    private void MovePlatformWithSpeed(Vector3 targetPosition, AnimationState nextState, float speed)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
@@ -94,6 +133,18 @@ public class PlatformController : MonoBehaviour
     public void Landing()
     {
         animationState = AnimationState.Landing;
+    }
+
+    // Market durumuna geçiş için yeni method
+    public void GoToMarket()
+    {
+        animationState = AnimationState.TakeOffToMarket;
+    }
+
+    // Marketten çıkış için yeni method
+    public void LeaveMarket()
+    {
+        animationState = AnimationState.LandingFromMarket;
     }
 
     void OnTriggerEnter(Collider other)
@@ -119,8 +170,6 @@ public class PlatformController : MonoBehaviour
     {
         this.boundaryGameOject.SetActive(enable);
     }
-
- 
 
     // Custom method to draw a wire cylinder
     private void DrawWireCylinder(Vector3 center, float radius, float height)
