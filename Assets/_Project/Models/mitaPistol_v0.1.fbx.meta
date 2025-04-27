@@ -38,11 +38,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: MitaPlasmaGun|idl_
-      takeName: MitaPlasmaGun|idl_
+      name: MitaPlasmaGun|reload_
+      takeName: MitaPlasmaGun|reload_
       internalID: -8588940736937996461
       firstFrame: 0
-      lastFrame: 14
+      lastFrame: 47
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
