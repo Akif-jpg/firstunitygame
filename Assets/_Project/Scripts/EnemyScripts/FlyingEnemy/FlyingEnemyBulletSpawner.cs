@@ -23,6 +23,11 @@ public class FlyingEnemyBulletSpawner : MonoBehaviour
     [Header("Burst Settings")]
     [SerializeField] private int bulletsPerBurst = 3; // How many bullets to fire in a burst
     [SerializeField] private float burstDelay = 0.15f; // Delay between bullets in a burst
+
+    [Header("ParticleSystem")]
+    [SerializeField] private GameObject muzzleFlashPrefab; // Atış efekti prefab'ı
+    [SerializeField] private GameObject impactEffectPrefab; // Mermi çarpma efekti prefab'ı
+    [SerializeField] private float effectDestroyTime = 2f; // Efekt yok olma süresi
     
     private Transform playerTransform;
     private float nextFireTime;
@@ -130,6 +135,22 @@ public class FlyingEnemyBulletSpawner : MonoBehaviour
             Debug.DrawRay(firePoint.position, spreadDirection * 5f, Color.green, 1f);
         }
         
+        // Create muzzle flash effect with correct rotation
+        if (muzzleFlashPrefab != null)
+        {
+            GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, Quaternion.LookRotation(spreadDirection));
+            // Alternatif olarak muzzleFlash'ı firePoint'in child'ı yapabiliriz
+            // muzzleFlash.transform.SetParent(firePoint);
+            Destroy(muzzleFlash, effectDestroyTime);
+            
+            // Particle sistemini aktifleştir (eğer başlangıçta deaktif ise)
+            ParticleSystem[] particleSystems = muzzleFlash.GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem ps in particleSystems)
+            {
+                ps.Play();
+            }
+        }
+        
         // Create the bullet
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(spreadDirection));
         
@@ -142,6 +163,13 @@ public class FlyingEnemyBulletSpawner : MonoBehaviour
             
             // Make sure bullet is oriented in the direction of travel
             bullet.transform.forward = spreadDirection;
+            
+            // Add component to handle bullet collision and impact effect
+            BulletImpactHandler impactHandler = bullet.AddComponent<BulletImpactHandler>();
+            if (impactHandler != null && impactEffectPrefab != null)
+            {
+                impactHandler.Initialize(impactEffectPrefab, effectDestroyTime);
+            }
         }
         else
         {
@@ -190,5 +218,45 @@ public class FlyingEnemyBulletSpawner : MonoBehaviour
                 Gizmos.DrawLine(firePoint.position, firePoint.position + direction * detectionRange * 0.8f);
             }
         }
+    }
+}
+
+// Merminin çarpma olayını yönetecek yardımcı sınıf
+public class BulletImpactHandler : MonoBehaviour
+{
+    private GameObject impactEffectPrefab;
+    private float effectDestroyTime;
+    
+    public void Initialize(GameObject impactEffect, float destroyTime)
+    {
+        impactEffectPrefab = impactEffect;
+        effectDestroyTime = destroyTime;
+    }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Çarpışma noktasını ve normal vektörünü al
+        ContactPoint contact = collision.contacts[0];
+        Vector3 position = contact.point;
+        Quaternion rotation = Quaternion.LookRotation(contact.normal);
+        
+        // Çarpma efektini oluştur
+        if (impactEffectPrefab != null)
+        {
+            GameObject impactEffect = Instantiate(impactEffectPrefab, position, rotation);
+            
+            // Particle sistemini aktifleştir
+            ParticleSystem[] particleSystems = impactEffect.GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem ps in particleSystems)
+            {
+                ps.Play();
+            }
+            
+            // Belirli bir süre sonra efekti yok et
+            Destroy(impactEffect, effectDestroyTime);
+        }
+        
+        // Mermiyi yok et
+        Destroy(gameObject);
     }
 }
