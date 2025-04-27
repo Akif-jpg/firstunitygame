@@ -9,9 +9,7 @@ public class FlyingEnemyBulletSpawner : MonoBehaviour
     [SerializeField] private LayerMask playerLayerMask;
     
     [Header("Shooting")]
-    [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float bulletSpeed = 10f;
     [SerializeField] private float fireRate = 1f;
     
     [Header("Accuracy Settings")]
@@ -106,11 +104,7 @@ public class FlyingEnemyBulletSpawner : MonoBehaviour
     
     private void ShootBullet()
     {
-        if (bulletPrefab == null || firePoint == null || playerTransform == null)
-        {
-            Debug.LogWarning("Bullet prefab, fire point, or player not available!");
-            return;
-        }
+
         
         // Look at the player
         transform.LookAt(playerTransform);
@@ -149,35 +143,7 @@ public class FlyingEnemyBulletSpawner : MonoBehaviour
             {
                 ps.Play();
             }
-        }
-        
-        // Create the bullet
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(spreadDirection));
-        
-        // Get the rigidbody component and apply velocity
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            // Apply velocity to the bullet
-            rb.velocity = spreadDirection * bulletSpeed;
-            
-            // Make sure bullet is oriented in the direction of travel
-            bullet.transform.forward = spreadDirection;
-            
-            // Add component to handle bullet collision and impact effect
-            BulletImpactHandler impactHandler = bullet.AddComponent<BulletImpactHandler>();
-            if (impactHandler != null && impactEffectPrefab != null)
-            {
-                impactHandler.Initialize(impactEffectPrefab, effectDestroyTime);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Bullet prefab does not have a Rigidbody component!");
-        }
-        
-        // Destroy bullet after some time to avoid memory leaks
-        Destroy(bullet, 5f);
+        }       
     }
     
     private Vector3 ApplySpread(Vector3 baseDirection, float spreadAngle)

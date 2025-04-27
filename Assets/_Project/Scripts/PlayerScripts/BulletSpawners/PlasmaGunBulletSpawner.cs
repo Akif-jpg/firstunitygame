@@ -23,21 +23,22 @@ public class BulletSpawner : MonoBehaviour
 
     void Update()
     {
-        
-        
         // super new update
-        if (time > 0 && fire) {
+        if (time > 0 && fire)
+        {
             time -= Time.deltaTime;
-            Debug.Log(time);
-        } else {
+        }
+        else
+        {
             time = 0.5f;
             fire = false;
         }
 
-        if (Input.GetMouseButtonDown(0) && !fire) {
+        if (Input.GetMouseButtonDown(0) && !fire)
+        {
             SpawnBullet();
             StartCoroutine(FireAnimation());
-            fire = true;            
+            fire = true;
         }
 
 

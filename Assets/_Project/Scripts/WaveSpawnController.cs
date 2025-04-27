@@ -83,7 +83,6 @@ public class WaveSpawnController : MonoBehaviour
         // 4) Ensure at least minEnemiesPerWave enemies are spawned
         int enemiesToSpawn = Mathf.Max(calculatedEnemies, minEnemiesPerWave);
 
-        Debug.Log($"[Wave {waveNumber}] Intensity={intensity:F2}, Random={rnd:F2} => Spawning {enemiesToSpawn} enemies (min: {minEnemiesPerWave})");
 
         for (int i = 0; i < enemiesToSpawn; i++)
         {
@@ -91,7 +90,6 @@ public class WaveSpawnController : MonoBehaviour
             SpawnSingleStandardEnemy();
         }
 
-        Debug.Log($"Wave {waveNumber} completed with {enemiesToSpawn} enemies spawned");
     }
 
     private void SpawnSingleStandardEnemy()
@@ -117,8 +115,7 @@ public class WaveSpawnController : MonoBehaviour
             yield break;
         }
 
-        Debug.Log("Enemy spawned at " + enemy.transform.position);
-
+   
         // Try to set player reference using direct component access
         Component[] components = enemy.GetComponents(typeof(Component));
 
@@ -135,7 +132,6 @@ public class WaveSpawnController : MonoBehaviour
                     try
                     {
                         method.Invoke(component, new object[] { playerTransform });
-                        Debug.Log("Set player reference via " + methodName);
                         break;
                     }
                     catch (System.Exception e)

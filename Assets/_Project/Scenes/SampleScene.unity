@@ -1837,6 +1837,7 @@ MonoBehaviour:
   characterHealth: 100
   healthSystem: {fileID: 1228835840}
   cameraTransform: {fileID: 330585546}
+  sprintMultiplier: 1
 --- !u!136 &1228835837
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2910,6 +2911,26 @@ PrefabInstance:
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 1353437387}
+    - target: {fileID: 7594583750261614947, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
+      propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594583750261614947, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594583750261614947, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756077306195200227, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
+      propertyPath: m_TagString
+      value: FlyingEnemyBullet
+      objectReference: {fileID: 0}
     - target: {fileID: 7836420469375617194, guid: 807c968a882195747bf97b1ff591435c,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -6,7 +6,7 @@ using UnityEngine;
 public class FPSController : MonoBehaviour
 {
     [Header("Character movements")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float mouseSensitivity = 2f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpHeight = 1.5f;
@@ -22,6 +22,8 @@ public class FPSController : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     private float xRotation = 0f;
+
+    public float sprintMultiplier = 1f;
 
 
     void Start()
@@ -49,8 +51,15 @@ public class FPSController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
+        // These commands are for sprinting
+        float speed = moveSpeed;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed *= sprintMultiplier;
+        }
+
         Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * moveSpeed * Time.deltaTime);
+        controller.Move(move * speed * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -71,5 +80,10 @@ public class FPSController : MonoBehaviour
 
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        
     }
 }
