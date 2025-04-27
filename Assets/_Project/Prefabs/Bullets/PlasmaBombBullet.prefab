@@ -266,6 +266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8991090130898351969}
+  - component: {fileID: 1068161759042868573}
   m_Layer: 0
   m_Name: PlasmaBombBullet
   m_TagString: PlasmaBomb
@@ -289,6 +290,19 @@ Transform:
   - {fileID: 6664731270471628936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1068161759042868573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782724875939147620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e82a317a9cce3f46ba9ef6670a83ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destructionDelay: 5
 --- !u!1001 &8967647496007706721
 PrefabInstance:
   m_ObjectHideFlags: 0

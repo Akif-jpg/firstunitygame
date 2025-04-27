@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private float followRange = 1.6f;
     [SerializeField] private Animator animator;
     [SerializeField] private ParticleSystem destroyParticle;
     [SerializeField] private ParticleSystem damageParticle;
@@ -50,7 +51,7 @@ public class Enemy : MonoBehaviour
     {
         if (playerTransform != null)
         {
-            Vector3 destination = playerTransform.position + Vector3.Normalize(this.transform.position - playerTransform.position) * 1.6f;
+            Vector3 destination = playerTransform.position + Vector3.Normalize(this.transform.position - playerTransform.position) * this.followRange;
             navMeshAgent.SetDestination(destination);
         }
 
