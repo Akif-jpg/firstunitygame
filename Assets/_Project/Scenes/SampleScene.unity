@@ -1616,6 +1616,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &994037751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7756077306195200227, guid: 807c968a882195747bf97b1ff591435c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1981149893}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &994037755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994037751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a880a0714f60486468479cb70c34253e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1176824029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,7 +1855,7 @@ MonoBehaviour:
   characterHealth: 100
   healthSystem: {fileID: 1228835840}
   cameraTransform: {fileID: 330585546}
-  sprintMultiplier: 1
+  sprintMultiplier: 2
 --- !u!136 &1228835837
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2908,9 +2926,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7326334697398292995, guid: 807c968a882195747bf97b1ff591435c,
         type: 3}
+      propertyPath: fireRate
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7326334697398292995, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 1353437387}
+    - target: {fileID: 7326334697398292995, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
+      propertyPath: burstDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7326334697398292995, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
+      propertyPath: bulletsPerBurst
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7326334697398292995, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
+      propertyPath: visualizeSpread
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7594583750261614947, guid: 807c968a882195747bf97b1ff591435c,
         type: 3}
       propertyPath: CollisionModule.type
@@ -2988,7 +3026,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1353437387}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7756077306195200227, guid: 807c968a882195747bf97b1ff591435c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 994037755}
   m_SourcePrefab: {fileID: 100100000, guid: 807c968a882195747bf97b1ff591435c, type: 3}
 --- !u!1001 &1994762843
 PrefabInstance:
