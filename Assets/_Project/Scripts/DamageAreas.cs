@@ -10,4 +10,7 @@ public class DamageAreas
 
     public static string PLAYER_BULLET = "Bullet";
     public static float PLAYER_BULLET_VALUE = 10f;
+
+    public static string PLASMA_BOMB_DAMAGE_AREA = "PlasmaBombDamageArea";
+    public static float PLASMA_BOMB_DAMAGE_AREA_VALUE = 25f;
 }

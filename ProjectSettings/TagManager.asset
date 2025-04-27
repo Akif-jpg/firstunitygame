@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - StandartEnemy
   - PlasmaBomb
+  - PlasmaBombDamageArea
   layers:
   - Default
   - TransparentFX

@@ -118,6 +118,12 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
 
         }
+
+        if(tagName == DamageAreas.PLASMA_BOMB_DAMAGE_AREA)
+        {
+            StartCoroutine(DamageAnimation());
+            this.enemyHealth.AddDamage(DamageAreas.PLASMA_BOMB_DAMAGE_AREA_VALUE);
+        }
     }
 
     IEnumerator DamageAnimation()
