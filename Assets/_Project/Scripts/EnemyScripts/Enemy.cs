@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Animator animator;
     [SerializeField] private ParticleSystem destroyParticle;
+    [SerializeField] private ParticleSystem damageParticle;
+    [SerializeField] private AudioSource wheelVFX;
     private NavMeshAgent navMeshAgent;
     private EnemyHealth enemyHealth;
 
@@ -52,6 +54,7 @@ public class Enemy : MonoBehaviour
             navMeshAgent.SetDestination(destination);
         }
 
+        UpdateWheelSound();
         // Update Animator parameter based on movement
         UpdateMovementAnimation();
 
@@ -62,6 +65,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void UpdateWheelSound()
+    {
+        if(wheelVFX != null)
+        {
+            bool isMoving = navMeshAgent.velocity.magnitude > movementThreshold;
+
+            if(isMoving != wasMoving)
+            {
+                if(isMoving)
+                {
+                    wheelVFX.Play();
+                }
+                else{
+                    wheelVFX.Stop();
+                 }   
+            }
+        }
+    }
     private void UpdateMovementAnimation()
     {
         if (animator != null)
@@ -102,8 +123,10 @@ public class Enemy : MonoBehaviour
     IEnumerator DamageAnimation()
     {
         animator.SetBool("IsHurt", true);
+        damageParticle.Play();
         yield return new WaitForSeconds(0.1f);
         animator.SetBool("IsHurt", false);
+        damageParticle.Stop();
     }
 
     IEnumerator DestroyAnimation()
