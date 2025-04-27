@@ -920,7 +920,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -3029,7 +3029,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -3234,6 +3234,7 @@ MonoBehaviour:
   weaponPrefabs:
   - {fileID: 1087233677070513291, guid: 7edc1ac9f04e6ae4587111f048d28faa, type: 3}
   - {fileID: 7876983844787679640, guid: 84ce40554eb438f44933b0c64bf3f2e9, type: 3}
+  - {fileID: 4463788979842610394, guid: 0e7b432b638098c47a341b6cb7b00f88, type: 3}
   weaponHolder: {fileID: 108933361}
   equipWeaponOnStart: 1
 --- !u!1 &1263621652
@@ -5337,6 +5338,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 14526744}
   m_LocalEulerAnglesHint: {x: 0, y: -165, z: 0}
+--- !u!1001 &3472299827256299547
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.3754314
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.5095375
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328753848106235969, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463788979842610394, guid: 0e7b432b638098c47a341b6cb7b00f88,
+        type: 3}
+      propertyPath: m_Name
+      value: PlasmaShoutGun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0e7b432b638098c47a341b6cb7b00f88, type: 3}
 --- !u!1001 &3665805663159195622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5463,3 +5532,4 @@ SceneRoots:
   - {fileID: 619314222}
   - {fileID: 14526744}
   - {fileID: 1709716935}
+  - {fileID: 3472299827256299547}
