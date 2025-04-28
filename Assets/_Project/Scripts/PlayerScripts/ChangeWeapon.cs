@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ChangeWeaponScript : MonoBehaviour
 {
     [Header("Weapon Settings")]
     [Tooltip("List of weapon prefabs that can be switched between")]
-    public List<GameObject> weaponPrefabs = new List<GameObject>();
+    [SerializeField] private List<GameObject> weaponPrefabs = new List<GameObject>();
     
     [Tooltip("Position where weapons will be instantiated")]
-    public Transform weaponHolder;
+    [SerializeField] private Transform weaponHolder;
     
     [Tooltip("Should the first weapon be equipped on start?")]
-    public bool equipWeaponOnStart = true;
+    [SerializeField] private bool equipWeaponOnStart = true;
+    [Header("Weapon Indicators")]
+    [Tooltip("Ammo amount indicator for weapons")]
+    [SerializeField] private TextMeshProUGUI ammoText;
 
     // Internal variables
     private GameObject currentWeapon;

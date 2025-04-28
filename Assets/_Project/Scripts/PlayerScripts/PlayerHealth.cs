@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
     public void SetCharacterHealth(float characterHealth)
     {
         this.characterHealth = characterHealth;
-        this.healthText.text = "Health: " + characterHealth;
+        this.healthText.text = "" + characterHealth;
     }
 
     public void AddDamage(float damagePerSecond, string damageId, float interval = 1f)
@@ -55,7 +55,12 @@ public class PlayerHealth : MonoBehaviour
         characterHealth -= amount;
         Debug.Log($"Player took {amount} damage. Health: {characterHealth}");
 
-        this.healthText.text = "Health: " + characterHealth;
+        this.healthText.text = "" + characterHealth;
+
+        if(this.characterHealth < 30f)
+        {
+            this.healthText.color = Color.red;
+        }
 
         if (characterHealth <= 0f)
         {
