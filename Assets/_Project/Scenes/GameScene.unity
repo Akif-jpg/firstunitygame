@@ -2484,6 +2484,11 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 333719171}
+    - target: {fileID: 7756569038518613600, guid: 75ed6610e309de34bbfe6c6061f922e7,
+        type: 3}
+      propertyPath: ammoText
+      value: 
+      objectReference: {fileID: 333719171}
     - target: {fileID: 8485578862314178274, guid: 75ed6610e309de34bbfe6c6061f922e7,
         type: 3}
       propertyPath: healthText
