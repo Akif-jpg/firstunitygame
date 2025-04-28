@@ -13,11 +13,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private ParticleSystem destroyParticle;
     [SerializeField] private ParticleSystem damageParticle;
     [SerializeField] private AudioSource wheelVFX;
+    [SerializeField] private AudioSource destroyAudio;
     private NavMeshAgent navMeshAgent;
     private EnemyHealth enemyHealth;
 
     // Variable to track if the enemy was moving in the previous frame
     private bool wasMoving = false;
+    // Variable for death animation and sound play one shot
+    private bool isDeathStatusStarted = false;
     // Threshold to determine if the enemy is considered moving
     private float movementThreshold = 0.1f;
 
@@ -49,7 +52,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (playerTransform != null)
+        if (playerTransform != null && enemyHealth.IsEnemyAlive())
         {
             Vector3 destination = playerTransform.position + Vector3.Normalize(this.transform.position - playerTransform.position) * this.followRange;
             navMeshAgent.SetDestination(destination);
@@ -60,8 +63,9 @@ public class Enemy : MonoBehaviour
         UpdateMovementAnimation();
 
         // If enemy is death.
-        if (!enemyHealth.IsEnemyAlive())
+         if (!enemyHealth.IsEnemyAlive() && !isDeathStatusStarted)
         {
+            isDeathStatusStarted = true;
             StartCoroutine(DestroyAnimation());
         }
     }
@@ -139,6 +143,7 @@ public class Enemy : MonoBehaviour
     IEnumerator DestroyAnimation()
     {
         destroyParticle.Play();
+        destroyAudio.Play();
         yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }

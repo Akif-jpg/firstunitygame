@@ -8,7 +8,19 @@ public class EnemyHealth
 
     public EnemyHealth()
     {
-        this.enemyHealth = random.Next(40, 81); // 40 ile 80 arasında (80 dahil)
+        this.enemyHealth = random.Next(40, 81); // Between 40 and 80
+        this.isEnemyAlive = this.enemyHealth > 0;
+    }
+
+    public EnemyHealth(int minHealth, int maxHealth)
+    {
+        this.enemyHealth = random.Next(minHealth, maxHealth); // Between min and max
+        this.isEnemyAlive = this.enemyHealth > 0;
+    }
+
+    public EnemyHealth(int enemyHealth)
+    {
+        this.enemyHealth = enemyHealth;
         this.isEnemyAlive = this.enemyHealth > 0;
     }
 

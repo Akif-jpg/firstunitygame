@@ -1118,11 +1118,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
         type: 3}
-      propertyPath: enableSpawn
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
-        type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 593610900}
@@ -2074,11 +2069,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
         type: 3}
-      propertyPath: enableSpawn
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
-        type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 593610900}
@@ -2626,11 +2616,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
         type: 3}
-      propertyPath: enableSpawn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
-        type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 593610900}
@@ -2639,17 +2624,6 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1228835834}
-    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
-        type: 3}
-      propertyPath: enemyTypes.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
-        type: 3}
-      propertyPath: enemyTypes.Array.data[0].enemyPrefab
-      value: 
-      objectReference: {fileID: 7263314650823786852, guid: 807c968a882195747bf97b1ff591435c,
-        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2944,11 +2918,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemySpawner (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
-        type: 3}
-      propertyPath: enableSpawn
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
         type: 3}
