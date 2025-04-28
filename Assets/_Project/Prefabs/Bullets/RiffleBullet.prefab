@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e82a317a9cce3f46ba9ef6670a83ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionDelay: 1
 --- !u!1001 &78803779548185572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -163,6 +164,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198086061384069858, guid: a990e3ac1318b834488c784d851f42a9,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198086061384069858, guid: a990e3ac1318b834488c784d851f42a9,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.6710699
+      objectReference: {fileID: 0}
+    - target: {fileID: 198086061384069858, guid: a990e3ac1318b834488c784d851f42a9,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.07058823
+      objectReference: {fileID: 0}
     - target: {fileID: 198706150799401992, guid: a990e3ac1318b834488c784d851f42a9,
         type: 3}
       propertyPath: UVModule.flipU
@@ -171,6 +187,21 @@ PrefabInstance:
     - target: {fileID: 198706150799401992, guid: a990e3ac1318b834488c784d851f42a9,
         type: 3}
       propertyPath: UVModule.flipV
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198706150799401992, guid: a990e3ac1318b834488c784d851f42a9,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198706150799401992, guid: a990e3ac1318b834488c784d851f42a9,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198706150799401992, guid: a990e3ac1318b834488c784d851f42a9,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 199127982807948490, guid: a990e3ac1318b834488c784d851f42a9,
