@@ -805,6 +805,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f2984619b866c046a6967cdbc6531df, type: 3}
+--- !u!114 &333719171 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3623387710034651364, guid: 2f2984619b866c046a6967cdbc6531df,
+    type: 3}
+  m_PrefabInstance: {fileID: 333719170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &448293837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,6 +1245,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemySpawner (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
+        type: 3}
+      propertyPath: enableSpawn
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
         type: 3}
@@ -1723,7 +1740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359f6112e8f486e31ae7381992937866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthText: {fileID: 0}
+  healthText: {fileID: 1293193419}
 --- !u!114 &1228835841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1742,6 +1759,7 @@ MonoBehaviour:
   - {fileID: 4463788979842610394, guid: 0e7b432b638098c47a341b6cb7b00f88, type: 3}
   weaponHolder: {fileID: 108933361}
   equipWeaponOnStart: 1
+  ammoText: {fileID: 333719171}
 --- !u!1 &1263621652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1810,6 +1828,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1293193419 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2705790293795118249, guid: 2f2984619b866c046a6967cdbc6531df,
+    type: 3}
+  m_PrefabInstance: {fileID: 333719170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1349451036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1872,6 +1902,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemySpawner (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
+        type: 3}
+      propertyPath: enableSpawn
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
         type: 3}
@@ -2422,6 +2457,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
         type: 3}
+      propertyPath: enableSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
+        type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 593610900}
@@ -2724,6 +2764,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemySpawner (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
+        type: 3}
+      propertyPath: enableSpawn
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7108497808585333404, guid: c7cab37bfdc180db1a8a2903b32846ab,
         type: 3}

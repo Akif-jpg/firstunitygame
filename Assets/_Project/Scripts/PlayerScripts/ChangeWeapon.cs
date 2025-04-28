@@ -8,10 +8,10 @@ public class ChangeWeaponScript : MonoBehaviour
     [Header("Weapon Settings")]
     [Tooltip("List of weapon prefabs that can be switched between")]
     [SerializeField] private List<GameObject> weaponPrefabs = new List<GameObject>();
-    
+
     [Tooltip("Position where weapons will be instantiated")]
     [SerializeField] private Transform weaponHolder;
-    
+
     [Tooltip("Should the first weapon be equipped on start?")]
     [SerializeField] private bool equipWeaponOnStart = true;
     [Header("Weapon Indicators")]
@@ -53,7 +53,7 @@ public class ChangeWeaponScript : MonoBehaviour
             {
                 // Convert to 0-based index for our array
                 int weaponIndex = i;
-                
+
                 // Only switch if the weapon exists in our list
                 if (weaponIndex < weaponPrefabs.Count)
                 {
@@ -91,13 +91,48 @@ public class ChangeWeaponScript : MonoBehaviour
         currentWeapon.transform.SetParent(weaponHolder);
         currentWeaponIndex = index;
 
-        Debug.Log($"Equipped weapon {index + 1}: {weaponPrefabs[index].name}");
+        // Weapon'ın parent'ının parent'ını al
+        Transform parentOfParent = currentWeapon.transform.parent.parent;
 
-        // You might want to do additional setup here like:
-        // - Adjust weapon position/rotation
-        // - Initialize weapon stats
-        // - Play weapon switch animation
-        // - Update UI
+        // BulletSpawner componentini bul (gerçek component tipini kullanmalısınız)
+        if (parentOfParent != null)
+        {
+            // BulletSpawner tipinin adını bilmiyorsanız, MonoBehaviour türeyen tüm componentleri kontrol edebilirsiniz
+            MonoBehaviour[] allComponents = parentOfParent.GetComponentsInChildren<MonoBehaviour>();
+            MonoBehaviour bulletSpawner = null;
+
+            // İçlerinden "BulletSpawner" adında olanı bul
+            foreach (MonoBehaviour comp in allComponents)
+            {
+                if (comp.GetType().Name.Contains("BulletSpawner"))
+                {
+                    bulletSpawner = comp;
+                    break;
+                }
+            }
+
+            if (bulletSpawner != null)
+            {
+                var ammoTextField = bulletSpawner.GetType().GetField("ammoText", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+                if (ammoTextField != null)
+                {
+                    ammoTextField.SetValue(bulletSpawner, ammoText);
+                    Debug.Log("Successfully set ammoText on BulletSpawner: " + bulletSpawner.GetType().Name);
+                }
+                else
+                {
+                    Debug.LogWarning("BulletSpawner does not have an ammoText field");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Could not find BulletSpawner component in parent's parent");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Current weapon does not have a parent's parent");
+        }
     }
 
     /// <summary>
