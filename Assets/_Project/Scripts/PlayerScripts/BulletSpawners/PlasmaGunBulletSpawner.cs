@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,7 +13,8 @@ public class BulletSpawner : MonoBehaviour
     public AudioSource audioSource;       // AudioSource for playing sounds
     public float time = 0.5f;
     public bool fire = false;
-    
+    public TextMeshProUGUI ammoText;
+
     // Track bullet count for reload
     private int bulletsFired = 0;
     public int bulletsBeforeReload = 6;
@@ -26,6 +28,7 @@ public class BulletSpawner : MonoBehaviour
 
     void Update()
     {
+        ammoText.text = (bulletsBeforeReload - bulletsFired).ToString();
         // Cooldown timer for firing
         if (time > 0 && fire)
         {
@@ -43,10 +46,10 @@ public class BulletSpawner : MonoBehaviour
             SpawnBullet();
             StartCoroutine(FireAnimation());
             fire = true;
-            
+
             // Increment bullet counter
             bulletsFired++;
-            
+
             // Check if we need to reload
             if (bulletsFired >= bulletsBeforeReload)
             {
@@ -54,25 +57,27 @@ public class BulletSpawner : MonoBehaviour
             }
         }
     }
-
     IEnumerator FireAnimation()
     {
         animator.SetBool("Fire", true);
         yield return new WaitForSeconds(0.1f); // Changed time from 0.5 to 0.1 seconds
         animator.SetBool("Fire", false);
     }
-    
+
     IEnumerator ReloadAnimation()
     {
         // Start reload process
         isReloading = true;
         animator.SetBool("Reload", true);
         
+        yield return new WaitForSeconds(1f);
+        
+        animator.SetBool("Reload", false);
         // Wait for reload animation
         yield return new WaitForSeconds(reloadTime);
-        
+
         // End reload
-        animator.SetBool("Reload", false);
+
         bulletsFired = 0;
         isReloading = false;
     }
@@ -87,12 +92,12 @@ public class BulletSpawner : MonoBehaviour
         {
             rb.velocity = spawnRotation * Vector3.forward * bulletSpeed;
         }
-        
+
         if (muzzleEffect != null)
         {
             muzzleEffect.Play();
         }
-        
+
         // Play sound effect
         if (audioSource != null)
         {
