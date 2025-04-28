@@ -81,58 +81,19 @@ public class ChangeWeaponScript : MonoBehaviour
         }
 
         // Destroy current weapon if there is one
-        if (currentWeapon != null)
+        if (currentWeapon != null && currentWeapon.activeSelf)
         {
-            Destroy(currentWeapon);
+            currentWeapon.SetActive(false);
         }
 
         // Instantiate new weapon
-        currentWeapon = Instantiate(weaponPrefabs[index], weaponHolder.position, weaponHolder.rotation);
+        currentWeapon = weaponPrefabs[index];
+        currentWeapon.transform.position = weaponHolder.position;
+        currentWeapon.transform.rotation = weaponHolder.rotation;
         currentWeapon.transform.SetParent(weaponHolder);
+        currentWeapon.SetActive(true);
+
         currentWeaponIndex = index;
-
-        // Weapon'ın parent'ının parent'ını al
-        Transform parentOfParent = currentWeapon.transform.parent.parent;
-
-        // BulletSpawner componentini bul (gerçek component tipini kullanmalısınız)
-        if (parentOfParent != null)
-        {
-            // BulletSpawner tipinin adını bilmiyorsanız, MonoBehaviour türeyen tüm componentleri kontrol edebilirsiniz
-            MonoBehaviour[] allComponents = parentOfParent.GetComponentsInChildren<MonoBehaviour>();
-            MonoBehaviour bulletSpawner = null;
-
-            // İçlerinden "BulletSpawner" adında olanı bul
-            foreach (MonoBehaviour comp in allComponents)
-            {
-                if (comp.GetType().Name.Contains("BulletSpawner"))
-                {
-                    bulletSpawner = comp;
-                    break;
-                }
-            }
-
-            if (bulletSpawner != null)
-            {
-                var ammoTextField = bulletSpawner.GetType().GetField("ammoText", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
-                if (ammoTextField != null)
-                {
-                    ammoTextField.SetValue(bulletSpawner, ammoText);
-                    Debug.Log("Successfully set ammoText on BulletSpawner: " + bulletSpawner.GetType().Name);
-                }
-                else
-                {
-                    Debug.LogWarning("BulletSpawner does not have an ammoText field");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Could not find BulletSpawner component in parent's parent");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Current weapon does not have a parent's parent");
-        }
     }
 
     /// <summary>
