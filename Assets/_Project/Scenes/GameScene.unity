@@ -2424,6 +2424,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1653882570603603825, guid: 75ed6610e309de34bbfe6c6061f922e7,
+        type: 3}
+      propertyPath: weaponOffset.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653882570603603825, guid: 75ed6610e309de34bbfe6c6061f922e7,
+        type: 3}
+      propertyPath: weaponTransform
+      value: 
+      objectReference: {fileID: 1700287515085981427}
     - target: {fileID: 3740391658461194995, guid: 75ed6610e309de34bbfe6c6061f922e7,
         type: 3}
       propertyPath: ammoText
@@ -2509,6 +2519,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75ed6610e309de34bbfe6c6061f922e7, type: 3}
+--- !u!4 &1700287515085981427 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1855173302490505715, guid: 75ed6610e309de34bbfe6c6061f922e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1700287515085981426}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
