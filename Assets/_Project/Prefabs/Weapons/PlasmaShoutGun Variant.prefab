@@ -26,14 +26,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4473287214216021291}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.6938227, z: -0, w: 0.72014594}
-  m_LocalPosition: {x: -3.34, y: 1.34, z: -39.88}
+  m_LocalRotation: {x: -0, y: -0.9995104, z: -0, w: 0.031288374}
+  m_LocalPosition: {x: -0.7502484, y: 1.34, z: -37.0093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7980785724452655805}
   m_Father: {fileID: 1884634948070865634}
-  m_LocalEulerAnglesHint: {x: 0, y: -87.867, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -176.414, z: 0}
 --- !u!114 &9211044994838798877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 8782724875939147620, guid: 6529adaec3522c0488d000480f2628fe,
     type: 3}
-  bulletBaseSpeed: 50
+  bulletBaseSpeed: 30
   speedVariation: 10
   pelletCount: 6
   spreadAngle: 5
@@ -56,6 +56,10 @@ MonoBehaviour:
   audioSource: {fileID: 2669217876718280264}
   cooldownTime: 1.2
   canFire: 1
+  maxAmmo: 12
+  currentAmmo: 0
+  ammoPerShot: 1
+  ammoText: {fileID: 0}
 --- !u!82 &2669217876718280264
 AudioSource:
   m_ObjectHideFlags: 0

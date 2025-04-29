@@ -107,7 +107,7 @@ public class PlasmaShotgunSpawner : MonoBehaviour
         for (int i = 0; i < pelletCount; i++)
         {
             SpawnPlasmaPellet(i);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
         }
     }
     
@@ -118,7 +118,7 @@ public class PlasmaShotgunSpawner : MonoBehaviour
         Vector3 spawnPosition = transform.position;
         Quaternion spawnRotation = transform.rotation;
         GameObject bullet = Instantiate(bulletPrefab, spawnPosition, spawnRotation);
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        Rigidbody rb = bullet.GetComponentInChildren<Rigidbody>();
         if (rb != null)
         {
             // Calculate spread angle based on pellet index
@@ -126,10 +126,14 @@ public class PlasmaShotgunSpawner : MonoBehaviour
             float spreadOffset = -spreadAngle / 2 + spreadStep * index;
 
             // Apply the calculated spread to the bullet's direction
-            Vector3 spreadDirection = Quaternion.Euler(0, spreadOffset, 0) * Vector3.forward;
+            Vector3 spreadDirection = Quaternion.Euler(UnityEngine.Random.Range(-spreadAngle/2, spreadAngle/2), spreadOffset, UnityEngine.Random.Range(-1f, 1f)) * Vector3.forward;
 
             // Set the bullet's velocity with the spread direction and speed
             rb.velocity = spawnRotation * spreadDirection * bulletBaseSpeed;
+        }
+        else
+        {
+            Debug.Log("Bullet rigidbody Null");
         }
     }
     
