@@ -2,29 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+using Unity.Mathematics;
 
 public class PlasmaShotgunSpawner : MonoBehaviour
 {
     [Header("Bullet Settings")]
-    public GameObject bulletPrefab;           // Plasma bullet prefab to spawn
-    public float bulletBaseSpeed = 21f;       // Base speed of bullets (lower than regular gun for better close-range effect)
-    public float speedVariation = 2f;         // Random variation in bullet speed
-    public int pelletCount = 6;               // Number of plasma pellets to spawn at once
-    public float spreadAngle = 15f;           // Maximum angle of bullet spread
+    [SerializeField] private GameObject bulletPrefab;           // Plasma bullet prefab to spawn
+    [SerializeField] private float bulletBaseSpeed = 21f;       // Base speed of bullets (lower than regular gun for better close-range effect)
+    [SerializeField] private float speedVariation = 2f;         // Random variation in bullet speed
+    [SerializeField] private int pelletCount = 6;               // Number of plasma pellets to spawn at once
+    [SerializeField] private float spreadAngle = 15f;           // Maximum angle of bullet spread
     
     [Header("Effects")]
-    public ParticleSystem muzzleEffect;       // Muzzle flash effect
-    public AudioSource audioSource;           // Audio source for shotgun sound
+    [SerializeField] private ParticleSystem muzzleEffect;       // Muzzle flash effect
+    [SerializeField] private AudioSource audioSource;           // Audio source for shotgun sound
     
     [Header("Weapon Properties")]
-    public float cooldownTime = 1.2f;         // Cooldown between shots (longer than regular gun)
-    public bool canFire = true;               // Flag to track if weapon can fire
+    [SerializeField] private float cooldownTime = 1.2f;         // Cooldown between shots (longer than regular gun)
+    [SerializeField] private bool canFire = true;               // Flag to track if weapon can fire
     
     [Header("Ammo System")]
-    public int maxAmmo = 12;                  // Maximum ammo capacity for shotgun
-    public int currentAmmo;                   // Current ammo count
-    public int ammoPerShot = 1;               // Ammo used per shot
-    public TextMeshProUGUI ammoText;          // Reference to UI text for displaying ammo
+    [SerializeField] private int maxAmmo = 12;                  // Maximum ammo capacity for shotgun
+    [SerializeField] private int currentAmmo;                   // Current ammo count
+    [SerializeField] private int ammoPerShot = 1;               // Ammo used per shot
+    [SerializeField] private TextMeshProUGUI ammoText;          // Reference to UI text for displaying ammo
     
     private Animator animator;                // Reference to parent's animator component
     private float cooldownTimer = 0f;         // Timer to track cooldown
@@ -95,53 +97,47 @@ public class PlasmaShotgunSpawner : MonoBehaviour
             audioSource.Play();
         }
         
-        // Spawn multiple pellets with random spread
+
+        StartCoroutine(PlasmaBulletSpawner());
+
+    }
+
+    IEnumerator PlasmaBulletSpawner()
+    {
         for (int i = 0; i < pelletCount; i++)
         {
-            SpawnPlasmaPellet();
+            SpawnPlasmaPellet(i);
+            yield return new WaitForSeconds(0.01f);
         }
     }
     
     // Method to spawn individual plasma pellets with spread
-    void SpawnPlasmaPellet()
+    void SpawnPlasmaPellet(int index)
     {
         // Calculate spread direction
-        Vector3 spreadDirection = CalculateSpreadDirection();
-        
-        // Create the bullet at the spawn point
         Vector3 spawnPosition = transform.position;
-        GameObject pellet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-        
-        // Get and set the rigidbody velocity with random speed variation
-        Rigidbody rb = pellet.GetComponent<Rigidbody>();
+        Quaternion spawnRotation = transform.rotation;
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, spawnRotation);
+        Rigidbody rb = bullet.GetComponentInChildren<Rigidbody>();
         if (rb != null)
         {
-            // Add random variation to speed for each pellet
-            float randomSpeed = bulletBaseSpeed + Random.Range(-speedVariation, speedVariation);
-            rb.velocity = spreadDirection * randomSpeed;
+            // Calculate spread angle based on pellet index
+            float spreadStep = spreadAngle / (pelletCount - 1);
+            float spreadOffset = -spreadAngle / 2 + spreadStep * index;
+
+            // Apply the calculated spread to the bullet's direction
+            Vector3 spreadDirection = Quaternion.Euler(UnityEngine.Random.Range(-spreadAngle/2, spreadAngle/2), spreadOffset, UnityEngine.Random.Range(-1f, 1f)) * Vector3.forward;
+
+            // Set the bullet's velocity with the spread direction and speed
+            rb.velocity = spawnRotation * spreadDirection * bulletBaseSpeed;
         }
-        
-        // Set bullet lifetime for better performance
-        Destroy(pellet, 5.0f);
+        else
+        {
+            Debug.Log("Bullet rigidbody Null");
+        }
     }
     
-    // Calculate a random direction within the spread angle
-    Vector3 CalculateSpreadDirection()
-    {
-        // Get the forward direction of the gun
-        Vector3 forwardDir = transform.forward;
-        
-        // Add random spread within the specified angle
-        float randomSpreadX = Random.Range(-spreadAngle, spreadAngle);
-        float randomSpreadY = Random.Range(-spreadAngle, spreadAngle);
-        
-        // Apply the random spread to the forward direction
-        Quaternion spreadRotation = Quaternion.Euler(randomSpreadX, randomSpreadY, 0);
-        Vector3 spreadDirection = spreadRotation * forwardDir;
-        
-        return spreadDirection.normalized;
-    }
-    
+   
     // Update the ammo count display
     void UpdateAmmoText()
     {
@@ -165,7 +161,7 @@ public class PlasmaShotgunSpawner : MonoBehaviour
         // animator.SetBool("Reloading", true);
         
         // Wait for reload time
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(3.0f);
         
         // Reset ammo count
         currentAmmo = maxAmmo;

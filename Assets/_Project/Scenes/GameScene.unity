@@ -2494,11 +2494,26 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 333719171}
+    - target: {fileID: 5763081452339685199, guid: 75ed6610e309de34bbfe6c6061f922e7,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 311
+      objectReference: {fileID: 0}
     - target: {fileID: 7756569038518613600, guid: 75ed6610e309de34bbfe6c6061f922e7,
         type: 3}
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 333719171}
+    - target: {fileID: 7756569038518613600, guid: 75ed6610e309de34bbfe6c6061f922e7,
+        type: 3}
+      propertyPath: spreadAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756569038518613600, guid: 75ed6610e309de34bbfe6c6061f922e7,
+        type: 3}
+      propertyPath: speedVariation
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8485578862314178274, guid: 75ed6610e309de34bbfe6c6061f922e7,
         type: 3}
       propertyPath: healthText

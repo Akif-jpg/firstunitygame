@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1270715303466993690}
   - component: {fileID: 2824991679423531561}
   - component: {fileID: 9071135053877886405}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: PlasmaBomb
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2824991679423531561
 Rigidbody:
@@ -128,14 +128,14 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &9071135053877886405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 2432204013008492577}
   - component: {fileID: 129464951163277557}
   - component: {fileID: 5688130882821141129}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlasmaBulletDamageArea
   m_TagString: PlasmaBombDamageArea
   m_Icon: {fileID: 0}
@@ -311,9 +311,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6664731270471628936}
     m_Modifications:
+    - target: {fileID: 1099298929610492, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
       propertyPath: m_Name
       value: EnergyExplosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367458547200666, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1919173750998442, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4865135451303388, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
       propertyPath: m_LocalScale.x
