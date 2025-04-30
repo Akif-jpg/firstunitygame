@@ -524,16 +524,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3368888704746169338, guid: 2f2984619b866c046a6967cdbc6531df,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 8.599976
-      objectReference: {fileID: 0}
-    - target: {fileID: 5456066306202561994, guid: 2f2984619b866c046a6967cdbc6531df,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 25.400024
-      objectReference: {fileID: 0}
     - target: {fileID: 6541137400505024367, guid: 2f2984619b866c046a6967cdbc6531df,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2518,11 +2508,6 @@ PrefabInstance:
         type: 3}
       propertyPath: spreadAngle
       value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 7756569038518613600, guid: 75ed6610e309de34bbfe6c6061f922e7,
-        type: 3}
-      propertyPath: cooldownTime
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7756569038518613600, guid: 75ed6610e309de34bbfe6c6061f922e7,
         type: 3}

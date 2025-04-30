@@ -20,16 +20,18 @@ public class PlasmaShotgunSpawner : MonoBehaviour
     
     [Header("Weapon Properties")]
     [SerializeField] private float cooldownTime = 1.2f;         // Cooldown between shots (longer than regular gun)
-    [SerializeField] private bool canFire = true;               // Flag to track if weapon can fire
     
     [Header("Ammo System")]
     [SerializeField] private int maxAmmo = 12;                  // Maximum ammo capacity for shotgun
     [SerializeField] private int currentAmmo;                   // Current ammo count
     [SerializeField] private int ammoPerShot = 1;               // Ammo used per shot
     [SerializeField] private TextMeshProUGUI ammoText;          // Reference to UI text for displaying ammo
+    [SerializeField] private float reloadTime = 3.0f;           // Time it takes to reload
     
     private Animator animator;                // Reference to parent's animator component
     private float cooldownTimer = 0f;         // Timer to track cooldown
+    private bool isReloading = false;         // Flag to track if weapon is reloading
+    private float nextFireTime = 0f;          // Time when weapon can fire next
     
     void Start()
     {
@@ -43,35 +45,41 @@ public class PlasmaShotgunSpawner : MonoBehaviour
     
     void Update()
     {
-        UpdateAmmoText();
+        // Only update UI when needed instead of every frame
+        if (ammoText != null && ammoText.text != currentAmmo + " / " + maxAmmo)
+        {
+            UpdateAmmoText();
+        }
+        
         // Handle cooldown timer
         if (cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;
-            canFire = false;
-        }
-        else if (!canFire)
-        {
-            canFire = true;
         }
         
-        // Check for fire input when weapon is ready and has ammo
-        if (Input.GetMouseButtonDown(0) && canFire && currentAmmo >= ammoPerShot)
+        // Check for fire input when weapon is ready, has ammo, and is not reloading
+        if (Input.GetMouseButtonDown(0) && CanFire())
         {
             FireShotgun();
-            StartCoroutine(PlayFireAnimation());
-            cooldownTimer = cooldownTime;
-            canFire = false;
-            
-            // Decrease ammo and update UI
-            currentAmmo -= ammoPerShot;
         }
         
-        // Option to reload (could use a different key like 'R')
-        if (Input.GetKeyDown(KeyCode.R) && currentAmmo < maxAmmo)
+        // Check for reload input
+        if (Input.GetKeyDown(KeyCode.R) && CanReload())
         {
-            Reload();
+            StartReload();
         }
+    }
+    
+    // Check if weapon can fire
+    private bool CanFire()
+    {
+        return !isReloading && cooldownTimer <= 0 && currentAmmo >= ammoPerShot && Time.time >= nextFireTime;
+    }
+    
+    // Check if weapon can reload
+    private bool CanReload()
+    {
+        return !isReloading && currentAmmo < maxAmmo;
     }
     
     // Coroutine to play fire animation
@@ -97,9 +105,19 @@ public class PlasmaShotgunSpawner : MonoBehaviour
             audioSource.Play();
         }
         
-
+        // Spawn bullets
         StartCoroutine(PlasmaBulletSpawner());
-
+        
+        // Play animation
+        StartCoroutine(PlayFireAnimation());
+        
+        // Set cooldown
+        cooldownTimer = cooldownTime;
+        nextFireTime = Time.time + cooldownTime;
+        
+        // Decrease ammo and update UI
+        currentAmmo -= ammoPerShot;
+        UpdateAmmoText();
     }
 
     IEnumerator PlasmaBulletSpawner()
@@ -129,15 +147,15 @@ public class PlasmaShotgunSpawner : MonoBehaviour
             Vector3 spreadDirection = Quaternion.Euler(UnityEngine.Random.Range(-spreadAngle/2, spreadAngle/2), spreadOffset, UnityEngine.Random.Range(-1f, 1f)) * Vector3.forward;
 
             // Set the bullet's velocity with the spread direction and speed
-            rb.velocity = spawnRotation * spreadDirection * bulletBaseSpeed;
+            float actualSpeed = bulletBaseSpeed + UnityEngine.Random.Range(-speedVariation, speedVariation);
+            rb.velocity = spawnRotation * spreadDirection * actualSpeed;
         }
         else
         {
-            Debug.Log("Bullet rigidbody Null");
+            Debug.LogWarning("Bullet rigidbody is Null");
         }
     }
     
-   
     // Update the ammo count display
     void UpdateAmmoText()
     {
@@ -147,27 +165,37 @@ public class PlasmaShotgunSpawner : MonoBehaviour
         }
     }
     
-    // Method to reload the weapon
-    public void Reload()
+    // Method to start reload process
+    public void StartReload()
     {
-        // Could add reload animation or sound here
+        // Set reloading flag to true to prevent firing
+        isReloading = true;
         StartCoroutine(ReloadRoutine());
     }
     
     // Coroutine for reload animation and timing
     IEnumerator ReloadRoutine()
     {
-        // Could set reloading animation flag here
-        // animator.SetBool("Reloading", true);
+        Debug.Log("Starting reload sequence");
         
-        // Wait for reload time
-        yield return new WaitForSeconds(3.0f);
+        // Start reload animation
+        animator.SetBool("Reloading", true);
+        
+        // Wait for animation transition
+        yield return new WaitForSeconds(1f);
+        
+        // Turn off reload animation trigger but keep reloading state
+        animator.SetBool("Reloading", false);
+        
+        // Continue waiting for full reload time
+        yield return new WaitForSeconds(reloadTime - 1f);
         
         // Reset ammo count
         currentAmmo = maxAmmo;
-        UpdateAmmoText();
         
-        // Turn off reload animation
-        // animator.SetBool("Reloading", false);
+        // Set reloading flag to false to allow firing again
+        isReloading = false;
+        
+        Debug.Log("Reload complete");
     }
 }
