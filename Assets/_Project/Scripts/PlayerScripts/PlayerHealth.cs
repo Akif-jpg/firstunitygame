@@ -60,7 +60,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     // Apply damage to the player
-    private void ApplyDamage(float amount)
+    public void ApplyDamage(float amount)
     {
         if (!isCharacterAlive) return;
 

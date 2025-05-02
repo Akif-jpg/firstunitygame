@@ -10,6 +10,7 @@ public class FireGunSystem : MonoBehaviour
 
     [Header("Actual Weapons Will Be Activate")]
     [SerializeField] private GameObject fireGuns; // GameObject containing the actual gun models/systems to activate
+    
 
     // Reference to the currently running coroutine for the firing sequence
     private Coroutine _fireSequenceCoroutine;
