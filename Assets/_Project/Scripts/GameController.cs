@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,12 +18,24 @@ public class GameController : MonoBehaviour
     [Tooltip("Area offset for check enemies area.")]
     [SerializeField] private Vector3 centerOffset = new Vector3(0f,2.5f,0f); // Offset position for scan area to enemy count.
 
+    [Header("UI Elements")]
+    [Tooltip("Load when game Over")]
+    [SerializeField] private Canvas gameOverCanvas;
+    [Tooltip("Game over canvas scoreboard")]
+    [SerializeField] private TextMeshProUGUI scoreBoard;
+
     [Header("Scene Names")]
     [Tooltip("Name of the scene for the marketplace area.")]
     [SerializeField] private string marketplaceSceneName = "MarketplaceScene";
     
     [Tooltip("Name of the scene for the battle arena.")]
     [SerializeField] private string arenaSceneName = "ArenaScene";
+
+    public void LoadGameOverCanvas()
+    {
+        gameOverCanvas.gameObject.SetActive(true);
+        this.scoreBoard.text += "\n" + this.GetWaveState();
+    }
 
     /// <summary>
     /// Loads the marketplace scene.
@@ -93,6 +106,7 @@ public class GameController : MonoBehaviour
         this.enemyTagPattern = "^[A-Z][a-z]*Enemy$"; 
         this.waveState = 0;
         this.gameState = GameState.GameStarting;
+        this.gameOverCanvas.gameObject.SetActive(false);
     }
 
     void Update()

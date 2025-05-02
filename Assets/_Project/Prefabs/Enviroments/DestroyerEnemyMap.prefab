@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 6
 --- !u!1 &1794002226146226571
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 2
 --- !u!1 &1851764593423775432
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 10
 --- !u!1 &1888134226013906843
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 3
 --- !u!1 &2602800105477057096
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 7
 --- !u!1 &2622102980778268566
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,7 +904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 4
 --- !u!1 &4160450778055616334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,7 +1057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 11
 --- !u!1 &4735758885471962673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,7 +1177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 8
 --- !u!1 &5113438223931932155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,7 +1330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 9
 --- !u!1 &6259127530852280755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 1
 --- !u!1 &6477040736712099709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,4 +1636,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyerEnemyMapController: {fileID: 1147951590408226234}
-  id: 0
+  id: 5

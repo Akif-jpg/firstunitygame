@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RocketSpawner : MonoBehaviour
@@ -8,6 +6,14 @@ public class RocketSpawner : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private AudioSource launchSound;
     [SerializeField] private ParticleSystem launchEffect;
+    [SerializeField] private float spawnInterval = 8f; // Füze serisi başlama aralığı
+    [SerializeField] private int rocketsPerBurst = 4; // Her seride kaç füze
+    [SerializeField] private float burstInterval = 0.4f; // Füzeler arası süre
+
+    private float globalTimer = 0f;
+    private float burstTimer = 0f;
+    private int burstRocketsFired = 0;
+    private bool isBursting = false;
 
     public void SetPlayerTransform(Transform playerTransform)
     {
@@ -22,51 +28,59 @@ public class RocketSpawner : MonoBehaviour
             return;
         }
 
-        // Play the launch sound effect
         if (launchSound != null)
-        {
             launchSound.Play();
-        }
         else
-        {
             Debug.LogWarning("Launch sound is not set!");
-        }
 
-        // Play the particle effect
         if (launchEffect != null)
-        {
             launchEffect.Play();
-        }
         else
-        {
             Debug.LogWarning("Launch effect is not set!");
-        }
 
         GameObject rocketInstance = Instantiate(rocketPrefab, transform.position, transform.rotation);
         RocketTargetFinder rocketTargetFinder = rocketInstance.GetComponentInChildren<RocketTargetFinder>();
-        
+
         if (rocketTargetFinder != null)
-        {
             rocketTargetFinder.SetTarget(this.playerTransform.position);
+        else
+            Debug.LogWarning("RocketTargetFinder not found on rocketPrefab.");
+    }
+
+    void Awake()
+    {
+        Debug.Log("Missile Launcher awaked");
+        SpawnMissile(); // İlk füze
+        globalTimer = 0f;
+    }
+
+    void Update()
+    {
+        if (!isBursting)
+        {
+            globalTimer += Time.deltaTime;
+            if (globalTimer >= spawnInterval)
+            {
+                isBursting = true;
+                burstTimer = 0f;
+                burstRocketsFired = 0;
+                globalTimer = 0f;
+            }
         }
         else
         {
-            Debug.LogWarning("RocketTargetFinder not found on rocketPrefab.");
-        }
-    }
+            burstTimer += Time.deltaTime;
+            if (burstTimer >= burstInterval)
+            {
+                SpawnMissile();
+                burstRocketsFired++;
+                burstTimer = 0f;
+            }
 
-    IEnumerator MissileSpawner()
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(2f);
-            SpawnMissile();
+            if (burstRocketsFired >= rocketsPerBurst)
+            {
+                isBursting = false;
+            }
         }
-    }
-    
-    void Start()
-    {
-        SpawnMissile();
-        StartCoroutine(MissileSpawner());
     }
 }

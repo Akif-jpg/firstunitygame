@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private Canvas gameOverCanvas;
+    [SerializeField] private GameController gameController;
     private bool isCharacterAlive = true;
     private float characterHealth;
 
@@ -16,12 +16,7 @@ public class PlayerHealth : MonoBehaviour
     {
         // Initialize health and make sure game over canvas is hidden at start
         characterHealth = 100f;
-        isCharacterAlive = true;
-        
-        if (gameOverCanvas != null)
-        {
-            gameOverCanvas.gameObject.SetActive(false);
-        }
+        isCharacterAlive = true;    
     }
 
     public PlayerHealth()
@@ -99,9 +94,9 @@ public class PlayerHealth : MonoBehaviour
         Cursor.visible = true;
 
         // Show game over UI
-        if (gameOverCanvas != null)
+        if (gameController != null)
         {
-            gameOverCanvas.gameObject.SetActive(true);
+            gameController.LoadGameOverCanvas();
             Debug.Log("Game over canvas activated!");
         }
         else

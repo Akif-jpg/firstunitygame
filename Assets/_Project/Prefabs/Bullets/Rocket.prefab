@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 6780441370370732424}
   m_Layer: 0
   m_Name: Rocket
-  m_TagString: Untagged
+  m_TagString: Missile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6844839d153b484192517582d44f76c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 20
+  forwardSpeed: 22
   initialForwardTime: 0.5
 --- !u!114 &4050819598064933033
 MonoBehaviour:
@@ -223,15 +223,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c25b0e0e92e901144a739246c4539336, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c25b0e0e92e901144a739246c4539336, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c25b0e0e92e901144a739246c4539336, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c25b0e0e92e901144a739246c4539336, type: 3}
       propertyPath: m_LocalPosition.x
