@@ -844,6 +844,10 @@ MonoBehaviour:
   waveState: 0
   boxSize: {x: 45, y: 5, z: 45}
   centerOffset: {x: 0, y: 2, z: 0}
+  gameOverCanvas: {fileID: 0}
+  scoreBoard: {fileID: 0}
+  marketplaceSceneName: MarketplaceScene
+  arenaSceneName: ArenaScene
 --- !u!4 &593610901
 Transform:
   m_ObjectHideFlags: 0
