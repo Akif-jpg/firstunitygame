@@ -85,7 +85,7 @@ public class FireGunSystem : MonoBehaviour
         // Activate charging animations
         if (animationsGameObject != null)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             animationsGameObject.SetActive(true);
         }
         else
@@ -121,7 +121,7 @@ public class FireGunSystem : MonoBehaviour
         }
 
         // Wait for 4 seconds (duration of the sound segment 2s to 6s)
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(1.0f);
 
         // Stop the charging sound specifically after 4 seconds
         if (chargingSound != null && chargingSound.isPlaying)
