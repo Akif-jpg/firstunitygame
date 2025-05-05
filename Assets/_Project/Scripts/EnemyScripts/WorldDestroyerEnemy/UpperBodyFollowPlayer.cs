@@ -254,4 +254,9 @@ public class UpperBodyFollowPlayer : MonoBehaviour
             Gizmos.DrawWireSphere(rayTransform.position, 0.1f);
         }
     }
+
+    public void SetPlayerTransform(Transform playerTransform)
+    {
+        this.playerTransform = playerTransform;
+    }
 }

@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioSource destroyAudio;
     private NavMeshAgent navMeshAgent;
     private EnemyHealth enemyHealth;
+    private float speed;
 
     // Variable to track if the enemy was moving in the previous frame
     private bool wasMoving = false;
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        this.speed = UnityEngine.Random.Range(20f,40f);
         navMeshAgent = GetComponent<NavMeshAgent>();
         this.enemyHealth = new EnemyHealth();
 

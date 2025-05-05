@@ -9,8 +9,6 @@ public class VegasHealthSystem : MonoBehaviour
 
     // Optional: Particle system for damage visual effect
     [SerializeField] private ParticleSystem damageParticle;
-    // Optional: Animator for damage animation
-    [SerializeField] private Animator animator;
     // Optional: Particle system for destroy visual effect
     [SerializeField] private ParticleSystem destroyParticle;
     // Optional: AudioSource for destroy sound effect
@@ -26,15 +24,6 @@ public class VegasHealthSystem : MonoBehaviour
         // Initialize EnemyHealth with a starting health value (e.g., 150)
         this.enemyHealth = new EnemyHealth(this.health);
 
-        // Optional: Get Animator component if not assigned
-        if (animator == null)
-        {
-            animator = GetComponentInParent<Animator>(); // Or GetComponent<Animator>() if it's on the same GameObject
-            if (animator == null)
-            {
-                Debug.LogWarning("Animator not found for VegasDamageSystem on " + gameObject.name);
-            }
-        }
     }
 
     void Update()
@@ -99,16 +88,6 @@ public class VegasHealthSystem : MonoBehaviour
             damageParticle.Play();
         }
 
-        // Trigger hurt animation if animator is assigned
-        if (animator != null)
-        {
-            animator.SetTrigger("Hurt"); // Use SetTrigger for short actions
-            // Or use SetBool if it's a state:
-            // animator.SetBool("IsHurt", true);
-            // yield return new WaitForSeconds(0.1f); // Wait a short time
-            // animator.SetBool("IsHurt", false);
-        }
-
         // Wait for a short duration if needed, e.g., for particle effect to be visible
         yield return new WaitForSeconds(0.2f);
 
@@ -140,13 +119,6 @@ public class VegasHealthSystem : MonoBehaviour
             destroyAudio.Play();
         }
 
-        // Trigger death animation if animator is assigned
-        if (animator != null)
-        {
-             // Assuming you have a "Die" trigger or "IsDead" bool parameter
-            animator.SetTrigger("Die");
-            // animator.SetBool("IsDead", true);
-        }
 
         // Wait for the duration of the death animation/effects
         // Adjust this time based on your animation and particle effect length

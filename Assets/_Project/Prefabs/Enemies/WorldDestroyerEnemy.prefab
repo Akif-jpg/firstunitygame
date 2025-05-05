@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40339ba771961b48b39a745308b0a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerSecond: 1
+  damagePerSecond: 5
   damageInterval: 0.5
   checkSize: {x: 3, y: 2, z: 2}
   gizmoColor: {r: 1, g: 0.3, b: 0.1, a: 0.4}
@@ -754,6 +754,7 @@ GameObject:
   - component: {fileID: 3635801956171656338}
   - component: {fileID: 6864731904293450787}
   - component: {fileID: 6849486582511400235}
+  - component: {fileID: 4303017348370196296}
   m_Layer: 0
   m_Name: WorldDestroyerEnemy
   m_TagString: WorldDestroyerEnemy
@@ -870,7 +871,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageParticle: {fileID: 1647601303799082103}
-  animator: {fileID: 0}
   destroyParticle: {fileID: 1810077005454751238}
   destroyAudio: {fileID: 6864731904293450787}
   health: 50
@@ -1066,6 +1066,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4303017348370196296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054256481304714965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc79dd1b8e0fb44abd70798ef181ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rocketSpawner1: {fileID: 4517222404784818818}
+  rocketSpawner2: {fileID: 4520078330349305125}
+  upperBodyFollowPlayer: {fileID: 2827714875693337586}
 --- !u!1 &4965690164143810360
 GameObject:
   m_ObjectHideFlags: 0
