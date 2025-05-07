@@ -12,8 +12,7 @@ public class RocketExplosion : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Rocket triggered by collision with: " + other.gameObject.name);
-        if (other.gameObject.name != "GameController" || other.tag != "Missile" || other.tag != "WorldDestroyerEnemy")
+        if (other.gameObject.name != "GameController" && other.tag != "Missile" && other.tag != "WorldDestroyerEnemy" && other.tag != "DamageArea")
         {
             // Stop movement by disabling physics
             Rigidbody rb = GetComponent<Rigidbody>();

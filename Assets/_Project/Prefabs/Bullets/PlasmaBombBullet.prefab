@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageArea: {fileID: 5683873633099909071}
   explosionEffect: {fileID: 9129079365701238291}
-  waitBeforeExplosion: 2
+  waitBeforeExplosion: 0.5
   destroyAfterExplosion: 1
 --- !u!1 &5683873633099909071
 GameObject:

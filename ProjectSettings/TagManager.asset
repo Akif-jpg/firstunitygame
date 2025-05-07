@@ -12,6 +12,7 @@ TagManager:
   - FlyingEnemyBullet
   - WorldDestroyerEnemy
   - Missile
+  - RiffleBullet
   layers:
   - Default
   - TransparentFX

@@ -51,18 +51,24 @@ public class VegasHealthSystem : MonoBehaviour
         // Check if the colliding object is tagged as a player bullet
         if (tagName == DamageAreas.PLAYER_BULLET)
         {
-            Debug.Log("Enemy hit by Player Bullet!");
             // Apply damage using the defined value
             this.enemyHealth.AddDamage(DamageAreas.PLAYER_BULLET_VALUE);
             // Play damage visual/audio effects (optional)
             StartCoroutine(DamageEffect());
             // Destroy the bullet object
             Destroy(other.gameObject);
+        }        
+        else if (tagName == DamageAreas.PLAYER_RIFFLE_BULLET)
+        {
+            StartCoroutine(DamageEffect());
+            // Apply damage to the enemy
+            this.enemyHealth.AddDamage(DamageAreas.PLAYER_RIFFLE_BULLET_VALUE);
+            Destroy(other.gameObject);
+
         }
         // Check if the colliding object is tagged as a plasma bomb damage area
         else if (tagName == DamageAreas.PLASMA_BOMB_DAMAGE_AREA)
         {
-             Debug.Log("Enemy hit by Plasma Bomb Area!");
             // Apply damage using the defined value
             this.enemyHealth.AddDamage(DamageAreas.PLASMA_BOMB_DAMAGE_AREA_VALUE);
             // Play damage visual/audio effects (optional)

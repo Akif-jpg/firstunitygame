@@ -189,6 +189,7 @@ public class MenuController : MonoBehaviour {
             rect.offsetMin = new Vector2(0, 0);
             activeBackground[0] = Bck;
         }
+        Time.timeScale = 1f;
     }
 
     //Press enter or click on option 
@@ -226,6 +227,7 @@ public class MenuController : MonoBehaviour {
     {
         //Loads the first scene, change the number to your desired scene
         SceneManager.LoadScene(1);
+        Time.timeScale = 1f;
     }
 
     //Continue

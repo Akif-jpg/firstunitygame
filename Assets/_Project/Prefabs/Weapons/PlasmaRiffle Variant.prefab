@@ -48,12 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2044175367211338439, guid: 157be79809746d14faf059d9e47e5e0b,
     type: 3}
-  bulletSpeed: 10
+  bulletSpeed: 30
   muzzleEffect: {fileID: 5802569666985134392}
   audioSource: {fileID: 7214769311951129114}
-  fireRate: 0.5
+  fireRate: 0.1
   isAutomatic: 1
-  maxAmmo: 30
+  maxAmmo: 120
   currentAmmo: 0
   ammoText: {fileID: 0}
 --- !u!82 &7214769311951129114

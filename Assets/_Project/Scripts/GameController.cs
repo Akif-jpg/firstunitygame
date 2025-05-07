@@ -66,6 +66,11 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void LoadMainScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     /// <summary>
     /// Loads scene by name.
     /// </summary>
