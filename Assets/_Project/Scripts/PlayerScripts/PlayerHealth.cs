@@ -38,6 +38,12 @@ public class PlayerHealth : MonoBehaviour
         this.healthText.text = "" + characterHealth;
     }
 
+    public void AddCharacterHealth(float additionalHealth)
+    {
+        this.characterHealth += additionalHealth;
+        this.healthText.text = "" + characterHealth;
+    }
+
     // Start a new damage-over-time routine if not already active
     public void AddDamage(float damagePerSecond, string damageId, float interval = 1f)
     {

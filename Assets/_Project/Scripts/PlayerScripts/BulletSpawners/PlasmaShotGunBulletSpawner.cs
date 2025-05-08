@@ -198,4 +198,9 @@ public class PlasmaShotgunSpawner : MonoBehaviour
         
         Debug.Log("Reload complete");
     }
+
+    public void AddAdditionalAmmo(int additionalAmmo)
+    {
+        this.currentAmmo += additionalAmmo;
+    }
 }
