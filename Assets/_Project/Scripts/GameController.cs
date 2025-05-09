@@ -216,7 +216,7 @@ public class GameController : MonoBehaviour
         foreach(var collider in colliders)
         {
             string objectTag = collider.tag;
-            if(!string.IsNullOrEmpty(objectTag) && Regex.IsMatch(objectTag, enemyTagPattern))
+            if(!string.IsNullOrEmpty(objectTag) && (Regex.IsMatch(objectTag, enemyTagPattern) || objectTag == "WorldDestroyerEnemy"))
             {
                 count ++;
             }

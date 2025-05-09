@@ -129,7 +129,7 @@ public class MarketScript : MonoBehaviour
         int gameStage = this.gameController.GetWaveState();
 
         // Check if already used market in this stage
-        if (this.latestGameStageUsed != gameStage)
+        if (this.latestGameStageUsed <= gameStage)
         {
             // Apply health upgrade
             ApplyHealthUpgrade();
@@ -138,7 +138,7 @@ public class MarketScript : MonoBehaviour
             ApplyWeaponUpgrades(gameStage);
 
             // Update the latest stage used
-            this.latestGameStageUsed = gameStage;
+            this.latestGameStageUsed += 1;
         }
         else
         {

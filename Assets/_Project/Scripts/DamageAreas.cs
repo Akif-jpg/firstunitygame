@@ -9,7 +9,7 @@ public class DamageAreas
     public static float STANDARD_ENEMY_DAMAGE_AREA_VALUE = 20f;
 
     public static string PLAYER_BULLET = "Bullet";
-    public static float PLAYER_BULLET_VALUE = 10f;
+    public static float PLAYER_BULLET_VALUE = 25f;
 
     public static string PLAYER_RIFFLE_BULLET = "RiffleBullet";
     public static float PLAYER_RIFFLE_BULLET_VALUE = 5f;

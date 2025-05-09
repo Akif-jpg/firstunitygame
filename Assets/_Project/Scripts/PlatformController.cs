@@ -33,8 +33,8 @@ public class PlatformController : MonoBehaviour
     }
 
     private AnimationState animationState;
-    private float moveSpeed = 2.0f;
-    private float marketMoveSpeed = 3.0f; // Market hareketleri için farklı bir hız tanımladım
+    private float moveSpeed = 3.0f;
+    private float marketMoveSpeed = 6.0f; // Market hareketleri için farklı bir hız tanımladım
 
     void Start()
     {
