@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BladeRotator : MonoBehaviour
+public class FireGunRotator : MonoBehaviour
 {
     public float rotationSpeed = 200f; // derece/saniye
 

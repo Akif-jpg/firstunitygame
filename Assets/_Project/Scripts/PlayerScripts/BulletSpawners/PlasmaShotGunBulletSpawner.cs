@@ -161,7 +161,7 @@ public class PlasmaShotgunSpawner : MonoBehaviour
     {
         if (ammoText != null)
         {
-            ammoText.text = currentAmmo + " / " + maxAmmo;
+            ammoText.text = currentAmmo.ToString();
         }
     }
     
@@ -197,5 +197,10 @@ public class PlasmaShotgunSpawner : MonoBehaviour
         isReloading = false;
         
         Debug.Log("Reload complete");
+    }
+
+    public void AddAdditionalAmmo(int additionalAmmo)
+    {
+        this.currentAmmo += additionalAmmo;
     }
 }

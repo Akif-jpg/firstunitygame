@@ -18,7 +18,8 @@ public class RocketTargetFinder : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.enabled = false; // Başta kapalı, çünkü launch fazında kullanılmaz
+        agent.enabled = false;
+        agent.speed = forwardSpeed;
     }
 
     public void SetTarget(Vector3 targetPosition)

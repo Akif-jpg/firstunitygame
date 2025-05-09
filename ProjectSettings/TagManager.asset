@@ -11,6 +11,9 @@ TagManager:
   - PlasmaBombDamageArea
   - FlyingEnemyBullet
   - WorldDestroyerEnemy
+  - Missile
+  - RiffleBullet
+  - Elevator
   layers:
   - Default
   - TransparentFX

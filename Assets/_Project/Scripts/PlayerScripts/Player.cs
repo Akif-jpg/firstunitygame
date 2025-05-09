@@ -24,19 +24,21 @@ public class FPSController : MonoBehaviour
     private CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
+    private bool canJump;
     private float xRotation = 0f;
     private float baseDistance;
 
     void Start()
     {
+        this.canJump = true;
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
 
-        if(weaponTransform != null)
+        if (weaponTransform != null)
         {
-            Vector2 cameraPosition = new Vector2(cameraTransform.position.x,cameraTransform.position.z);
+            Vector2 cameraPosition = new Vector2(cameraTransform.position.x, cameraTransform.position.z);
             Vector2 weaponPosition = new Vector2(weaponTransform.position.x, weaponTransform.position.z);
-            this.baseDistance = Vector2.Distance(cameraPosition,weaponPosition);
+            this.baseDistance = Vector2.Distance(cameraPosition, weaponPosition);
         }
 
         healthSystem.SetCharacterHealth(this.characterHealth);
@@ -69,7 +71,7 @@ public class FPSController : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && canJump)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -97,8 +99,26 @@ public class FPSController : MonoBehaviour
         weaponTransform.localRotation = Quaternion.Euler(-xRotation, -180f, 0f);
 
         // Adjust weapon position based on camera angle
-        Vector3 weaponOffset = new Vector3(0.3519999f,0.4010001f + Mathf.Sin(Mathf.Deg2Rad * xRotation) * baseDistance * -1, 0.813f);
+        Vector3 weaponOffset = new Vector3(0.3519999f, 0.4010001f + Mathf.Sin(Mathf.Deg2Rad * xRotation) * baseDistance * -1, 0.813f);
         weaponTransform.localPosition = weaponOffset;
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Elevator"))
+        {
+            canJump = false;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Elevator"))
+        {
+            canJump = true;
+        }
+    }
+
+
 
 }
