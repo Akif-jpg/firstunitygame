@@ -29,12 +29,14 @@ public class PlatformController : MonoBehaviour
         LandingFromMarket,
         AwaitLanding,
         AwaitTakeoff,
-        AwaitInMarket 
+        AwaitInMarket,
+        PausedLanding  // New state for when landing is paused because player is in the way
     }
 
     private AnimationState animationState;
     private float moveSpeed = 3.0f;
     private float marketMoveSpeed = 6.0f; // Market hareketleri için farklı bir hız tanımladım
+    private bool playerInLandingArea = false; // Flag to track if player is in landing area
 
     void Start()
     {
@@ -49,7 +51,24 @@ public class PlatformController : MonoBehaviour
         switch (animationState)
         {
             case AnimationState.Landing:
-                MovePlatform(platformGroundPosition, AnimationState.AwaitTakeoff);               
+                // Only move the platform down if no player is in the landing area
+                if (!playerInLandingArea)
+                {
+                    MovePlatform(platformGroundPosition, AnimationState.AwaitTakeoff);
+                }
+                else
+                {
+                    // If player is detected in landing area, pause the landing
+                    animationState = AnimationState.PausedLanding;
+                }
+                break;
+            case AnimationState.PausedLanding:
+                // Stay in this state until player leaves the landing area
+                if (!playerInLandingArea)
+                {
+                    // Resume landing when player leaves
+                    animationState = AnimationState.Landing;
+                }
                 break;
             case AnimationState.Takeoff:
                 MovePlatform(platformTopPosition, AnimationState.AwaitLanding);
@@ -81,13 +100,29 @@ public class PlatformController : MonoBehaviour
 
         if (gameController.IsRoundOver())
         {
-            this.animationState = AnimationState.Landing;
+            // Only start landing if player is not in landing area
+            if (!playerInLandingArea)
+            {
+                this.animationState = AnimationState.Landing;
+            }
+            else
+            {
+                this.animationState = AnimationState.PausedLanding;
+            }
             EnableBoundaries(false);
         }
 
         if(gameController.IsGameStarting() && this.animationState != AnimationState.AwaitTakeoff)
         {
-            this.animationState = AnimationState.Landing;
+            // Only start landing if player is not in landing area
+            if (!playerInLandingArea)
+            {
+                this.animationState = AnimationState.Landing;
+            }
+            else
+            {
+                this.animationState = AnimationState.PausedLanding;
+            }
             EnableBoundaries(true);
         }
 
@@ -132,7 +167,15 @@ public class PlatformController : MonoBehaviour
 
     public void Landing()
     {
-        animationState = AnimationState.Landing;
+        // Only start landing if no player is in landing area
+        if (!playerInLandingArea)
+        {
+            animationState = AnimationState.Landing;
+        }
+        else
+        {
+            animationState = AnimationState.PausedLanding;
+        }
     }
 
     // Market durumuna geçiş için yeni method
@@ -207,6 +250,31 @@ public class PlatformController : MonoBehaviour
             Vector3 point2 = center + new Vector3(Mathf.Cos(angle2), 0, Mathf.Sin(angle2)) * radius;
 
             Gizmos.DrawLine(point1, point2);
+        }
+    }
+
+    // Implement logic for when player enters landing area
+    public void PlayerTriggeredLandingArea()
+    {
+        playerInLandingArea = true;
+        
+        // If platform is currently landing, pause it
+        if (animationState == AnimationState.Landing)
+        {
+            animationState = AnimationState.PausedLanding;
+            Debug.Log("Triggered pause state");
+        }
+    }
+
+    // Implement logic for when player exits landing area
+    public void PlayerExitLandingArea()
+    {
+        playerInLandingArea = false;
+        
+        // If platform was paused during landing, resume landing
+        if (animationState == AnimationState.PausedLanding)
+        {
+            animationState = AnimationState.Landing;
         }
     }
 }
