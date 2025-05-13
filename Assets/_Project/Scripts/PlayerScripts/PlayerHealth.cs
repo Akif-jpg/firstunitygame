@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
     {
         // Initialize health and make sure game over canvas is hidden at start
         characterHealth = 100f;
-        isCharacterAlive = true;    
+        isCharacterAlive = true;
     }
 
     public PlayerHealth()
@@ -40,8 +40,12 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddCharacterHealth(float additionalHealth)
     {
-        this.characterHealth += additionalHealth;
-        this.healthText.text = "" + characterHealth;
+        characterHealth += additionalHealth;
+        if (healthText != null)
+        {
+            healthText.text = characterHealth.ToString();
+            healthText.color = characterHealth > 30f ? Color.green : healthText.color;
+        }
     }
 
     // Start a new damage-over-time routine if not already active

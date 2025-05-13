@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Canvas gameOverCanvas;
     [Tooltip("Game over canvas scoreboard")]
     [SerializeField] private TextMeshProUGUI scoreBoard;
+    [SerializeField] private TextMeshProUGUI waveNumberText;
 
     [Header("Scene Names")]
     [Tooltip("Name of the scene for the marketplace area.")]
@@ -86,6 +87,7 @@ public class GameController : MonoBehaviour
             Debug.LogWarning("Scene name is null or empty.");
         }
     }
+    
     private String enemyTagPattern;
 
     private enum GameState {
@@ -139,6 +141,7 @@ public class GameController : MonoBehaviour
     {
         waveState++;
         Debug.Log("Wave increased to: " + waveState);
+        this.waveNumberText.text = "" + (waveState+1);
     }
 
     void OnTriggerEnter(Collider other)

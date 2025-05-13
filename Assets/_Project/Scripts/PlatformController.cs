@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,10 +18,15 @@ public class PlatformController : MonoBehaviour
     [SerializeField] private Vector3 centerOffset = new Vector3(0f, 5f, 0f);
     [SerializeField] private GameObject boundaryGameOject;
 
+    [Header("UI Elements")]
+    [SerializeField] private TMPro.TextMeshProUGUI pressSpaceText;
+
     private Vector3 platformGroundPosition;
     private Vector3 platformTopPosition;
     private Vector3 platformMarketplacePosition;
-    private GameObject boundaryCollider;
+    private bool isPlayerInPlatform;
+    private const float AWAIT_TAKE_TO_TAKEOFF = 15;
+    private float awaitToTakeOff;
     private enum AnimationState
     {
         Landing,
@@ -36,7 +42,7 @@ public class PlatformController : MonoBehaviour
     private AnimationState animationState;
     private float moveSpeed = 3.0f;
     private float marketMoveSpeed = 6.0f; // Market hareketleri için farklı bir hız tanımladım
-    private bool playerInLandingArea = false; // Flag to track if player is in landing area
+    private bool isPlayerInLandingArea = false; // Flag to track if player is in landing area
 
     void Start()
     {
@@ -44,6 +50,8 @@ public class PlatformController : MonoBehaviour
         platformTopPosition = new Vector3(0, 9.2f, 0);
         platformGroundPosition = new Vector3(0, 1.0f, 0);
         platformMarketplacePosition = new Vector3(0f, 40.83f, 0f);
+        this.pressSpaceText.gameObject.SetActive(false);
+        this.awaitToTakeOff = AWAIT_TAKE_TO_TAKEOFF;
     }
 
     void FixedUpdate()
@@ -52,9 +60,10 @@ public class PlatformController : MonoBehaviour
         {
             case AnimationState.Landing:
                 // Only move the platform down if no player is in the landing area
-                if (!playerInLandingArea)
+                if (!isPlayerInLandingArea)
                 {
                     MovePlatform(platformGroundPosition, AnimationState.AwaitTakeoff);
+                    this.awaitToTakeOff = AWAIT_TAKE_TO_TAKEOFF;
                 }
                 else
                 {
@@ -64,7 +73,7 @@ public class PlatformController : MonoBehaviour
                 break;
             case AnimationState.PausedLanding:
                 // Stay in this state until player leaves the landing area
-                if (!playerInLandingArea)
+                if (!isPlayerInLandingArea)
                 {
                     // Resume landing when player leaves
                     animationState = AnimationState.Landing;
@@ -86,22 +95,24 @@ public class PlatformController : MonoBehaviour
                 break;
             case AnimationState.AwaitTakeoff:
                 EnableBoundaries(false);
+
                 break;
             case AnimationState.AwaitInMarket:
                 // Market alanında bekleme durumu
                 break;
         }
 
+
         if (gameController.IsRestingState() || gameController.IsGameStart())
         {
-            this.animationState = AnimationState.Takeoff;
+            this.animationState = AnimationState.TakeOffToMarket;
             EnableBoundaries(true);
         }
 
         if (gameController.IsRoundOver())
         {
             // Only start landing if player is not in landing area
-            if (!playerInLandingArea)
+            if (!isPlayerInLandingArea)
             {
                 this.animationState = AnimationState.Landing;
             }
@@ -112,10 +123,10 @@ public class PlatformController : MonoBehaviour
             EnableBoundaries(false);
         }
 
-        if(gameController.IsGameStarting() && this.animationState != AnimationState.AwaitTakeoff)
+        if (gameController.IsGameStarting() && this.animationState != AnimationState.AwaitTakeoff)
         {
             // Only start landing if player is not in landing area
-            if (!playerInLandingArea)
+            if (!isPlayerInLandingArea)
             {
                 this.animationState = AnimationState.Landing;
             }
@@ -126,10 +137,10 @@ public class PlatformController : MonoBehaviour
             EnableBoundaries(true);
         }
 
-        if(gameController.IsMarketingState())
+        if (gameController.IsMarketingState())
         {
             // Eğer şu anda markette değilsek markete hareket başlat
-            if (this.animationState != AnimationState.TakeOffToMarket && 
+            if (this.animationState != AnimationState.TakeOffToMarket &&
                 this.animationState != AnimationState.AwaitInMarket)
             {
                 this.animationState = AnimationState.TakeOffToMarket;
@@ -143,6 +154,12 @@ public class PlatformController : MonoBehaviour
                 this.animationState = AnimationState.LandingFromMarket;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isPlayerInPlatform)
+        {
+            this.gameController.SendSignalHitNextWave();
+            this.pressSpaceText.gameObject.SetActive(false);
+        }
     }
 
     private void MovePlatform(Vector3 targetPosition, AnimationState nextState)
@@ -152,9 +169,9 @@ public class PlatformController : MonoBehaviour
 
     private void MovePlatformWithSpeed(Vector3 targetPosition, AnimationState nextState, float speed)
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
+         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
 
-        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+        if (Vector3.Distance(transform.position, targetPosition) < 0.05f)
         {
             animationState = nextState;
         }
@@ -168,7 +185,7 @@ public class PlatformController : MonoBehaviour
     public void Landing()
     {
         // Only start landing if no player is in landing area
-        if (!playerInLandingArea)
+        if (!isPlayerInLandingArea)
         {
             animationState = AnimationState.Landing;
         }
@@ -196,6 +213,17 @@ public class PlatformController : MonoBehaviour
         if (other.tag == "Player")
         {
             this.gameController.SendSignalPlayerEnterToPlatform();
+            this.isPlayerInPlatform = true;
+            this.pressSpaceText.gameObject.SetActive(true);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            this.isPlayerInPlatform = false;
+            this.pressSpaceText.gameObject.SetActive(false);
         }
     }
 
@@ -256,8 +284,8 @@ public class PlatformController : MonoBehaviour
     // Implement logic for when player enters landing area
     public void PlayerTriggeredLandingArea()
     {
-        playerInLandingArea = true;
-        
+        isPlayerInLandingArea = true;
+
         // If platform is currently landing, pause it
         if (animationState == AnimationState.Landing)
         {
@@ -269,8 +297,8 @@ public class PlatformController : MonoBehaviour
     // Implement logic for when player exits landing area
     public void PlayerExitLandingArea()
     {
-        playerInLandingArea = false;
-        
+        isPlayerInLandingArea = false;
+
         // If platform was paused during landing, resume landing
         if (animationState == AnimationState.PausedLanding)
         {

@@ -9,13 +9,13 @@ public class LandingTriggered : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggered by " + other.tag);
         if(other.tag == "Player")
         {
             this.platformController.PlayerTriggeredLandingArea();
-            Debug.Log("Triggered by player");
+            Debug.Log("Player triggered to landing area");
         }
-    }
+
+   }
 
     void OnTriggerExit(Collider other)
     {
