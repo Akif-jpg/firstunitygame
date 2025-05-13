@@ -24,7 +24,7 @@ public class PlasmaShotgunSpawner : MonoBehaviour
     [Header("Ammo System")]
     [SerializeField] private int maxAmmo = 12;                  // Maximum ammo capacity for shotgun
     [SerializeField] private int currentAmmo;                   // Current ammo count
-    [SerializeField] private int ammoPerShot = 1;               // Ammo used per shot
+    [SerializeField] private int ammoPerShot = 6;               // Ammo used per shot
     [SerializeField] private TextMeshProUGUI ammoText;          // Reference to UI text for displaying ammo
     [SerializeField] private float reloadTime = 3.0f;           // Time it takes to reload
     
