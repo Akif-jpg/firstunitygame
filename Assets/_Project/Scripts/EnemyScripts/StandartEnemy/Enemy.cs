@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioSource destroyAudio;
     private NavMeshAgent navMeshAgent;
     private EnemyHealth enemyHealth;
+    private float speed;
 
     // Variable to track if the enemy was moving in the previous frame
     private bool wasMoving = false;
@@ -26,7 +27,9 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = UnityEngine.Random.Range(10f, 25f);
         this.enemyHealth = new EnemyHealth();
 
         // Make sure animator is assigned
@@ -63,7 +66,7 @@ public class Enemy : MonoBehaviour
         UpdateMovementAnimation();
 
         // If enemy is death.
-         if (!enemyHealth.IsEnemyAlive() && !isDeathStatusStarted)
+        if (!enemyHealth.IsEnemyAlive() && !isDeathStatusStarted)
         {
             isDeathStatusStarted = true;
             StartCoroutine(DestroyAnimation());
@@ -72,19 +75,20 @@ public class Enemy : MonoBehaviour
 
     private void UpdateWheelSound()
     {
-        if(wheelVFX != null)
+        if (wheelVFX != null)
         {
             bool isMoving = navMeshAgent.velocity.magnitude > movementThreshold;
 
-            if(isMoving != wasMoving)
+            if (isMoving != wasMoving)
             {
-                if(isMoving)
+                if (isMoving)
                 {
                     wheelVFX.Play();
                 }
-                else{
+                else
+                {
                     wheelVFX.Stop();
-                 }   
+                }
             }
         }
     }
@@ -124,7 +128,16 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if(tagName == DamageAreas.PLASMA_BOMB_DAMAGE_AREA)
+        if (tagName == DamageAreas.PLAYER_RIFFLE_BULLET)
+        {
+            StartCoroutine(DamageAnimation());
+            // Apply damage to the enemy
+            this.enemyHealth.AddDamage(DamageAreas.PLAYER_RIFFLE_BULLET_VALUE);
+            Destroy(other.gameObject);
+
+        }
+
+        if (tagName == DamageAreas.PLASMA_BOMB_DAMAGE_AREA)
         {
             StartCoroutine(DamageAnimation());
             this.enemyHealth.AddDamage(DamageAreas.PLASMA_BOMB_DAMAGE_AREA_VALUE);

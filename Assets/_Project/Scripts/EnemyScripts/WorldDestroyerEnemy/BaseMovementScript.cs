@@ -75,22 +75,9 @@ public class BaseMovementScript : MonoBehaviour
     private MapTriggerId playerLastTriggeredId = MapTriggerId.None;      // Player's latest triggered ID (starts as None)
     private MapTriggerId lastReachedTriggerId = MapTriggerId.None;       // The trigger ID we LAST REACHED (to prevent repetition)
 
-    void Awake()
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-
-        // --- Essential Component Checks ---
-        if (destroyerEnemyMapController == null)
-        {
-            Debug.LogError("DestroyerEnemyMapController is not assigned!", this);
-            enabled = false; // Disable the script if setup is incorrect
-            return;
-        }
-        if (playerTransform == null)
-        {
-            Debug.LogWarning("Player Transform is not assigned. Initial player following will not work.", this);
-            // Continue execution, but initial following is disabled
-        }
 
         // --- Map Data Initialization ---
         mapList = destroyerEnemyMapController.GetMapTriggersList();
@@ -376,5 +363,15 @@ public class BaseMovementScript : MonoBehaviour
             // If SamplePosition fails, just wait for the next timer cycle
         }
          // If the timer hasn't elapsed, the agent just waits or continues its short wander path.
+    }
+
+    public void SetDestroyerMapController(DestroyerEnemyMapController enemyMapController)
+    {
+        this.destroyerEnemyMapController = enemyMapController;
+    }
+
+    public void SetPlayerTransform(Transform playerTransform)
+    {
+        this.playerTransform = playerTransform;
     }
 }

@@ -19,11 +19,12 @@ public class WaveSpawnController : MonoBehaviour
     public GameController gameController;
     public Transform spawnPoint;
     public Transform playerTransform;
+    public DestroyerEnemyMapController destroyerEnemyMapController;
     public Animator doorAnimator; // optional
 
     [Header("Enemy Settings")]
     public List<EnemyTypeInfo> enemyTypes = new List<EnemyTypeInfo>();
-    
+
     [Header("Standard Enemy Minimum")]
     [Tooltip("Sadece ilk düşman türü (standart düşman) için minimum sayı")]
     public int minStandardEnemiesPerWave = 1;
@@ -49,7 +50,7 @@ public class WaveSpawnController : MonoBehaviour
 
     void Start()
     {
-        if(enableSpawn)
+        if (enableSpawn)
         {
             ValidateSetup();
         }
@@ -134,7 +135,7 @@ public class WaveSpawnController : MonoBehaviour
         for (int i = 0; i < totalEnemiesToSpawn; i++)
         {
             yield return new WaitForSeconds(timeBetweenSpawns);
-            
+
             // Check if we have too many active enemies
             if (activeEnemies.Count >= maxActiveEnemies)
             {
@@ -181,7 +182,7 @@ public class WaveSpawnController : MonoBehaviour
         for (int i = 0; i < enemyTypes.Count; i++)
         {
             cumulativeRatio += enemyTypes[i].spawnRatio;
-            
+
             if (randomValue <= cumulativeRatio)
             {
                 SpawnEnemy(i);
@@ -193,7 +194,7 @@ public class WaveSpawnController : MonoBehaviour
     private void SpawnEnemy(int enemyTypeIndex)
     {
         if (enemyTypeIndex < 0 || enemyTypeIndex >= enemyTypes.Count) return;
-        
+
         StartCoroutine(SpawnEnemyRoutine(enemyTypeIndex));
     }
 
@@ -219,12 +220,12 @@ public class WaveSpawnController : MonoBehaviour
 
         // Track the enemy for optimization purposes
         activeEnemies.Add(enemy);
-        
+
         // Update statistics
         enemyType.spawnCount++;
 
         // Try to set player reference using direct component access - any component that might need player target
-        SetPlayerReferenceForEnemy(enemy);
+        SetReferencesForEnemy(enemy);
 
         // Close door if needed
         if (doorAnimator != null)
@@ -234,11 +235,28 @@ public class WaveSpawnController : MonoBehaviour
         }
     }
 
-    private void SetPlayerReferenceForEnemy(GameObject enemy)
+    private void SetReferencesForEnemy(GameObject enemy)
     {
         if (playerTransform == null) return;
 
         Component[] components = enemy.GetComponents(typeof(Component));
+
+        PlayerTransformAssigner playerTransformAssigner = enemy.GetComponentInChildren<PlayerTransformAssigner>();
+
+        if (playerTransformAssigner != null)
+        {
+            playerTransformAssigner.SetPlayerTransform(this.playerTransform);
+            BaseMovementScript baseMovementScript = enemy.GetComponent<BaseMovementScript>();
+            baseMovementScript.SetDestroyerMapController(this.destroyerEnemyMapController);
+            baseMovementScript.SetPlayerTransform(this.playerTransform);
+            Debug.Log("Player tranform assigner work");
+
+        }else
+        {
+            Debug.Log("playertransform assigner null");
+        }
+
+
 
         foreach (Component component in components)
         {

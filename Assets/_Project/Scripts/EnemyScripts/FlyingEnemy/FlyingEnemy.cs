@@ -102,6 +102,16 @@ public class FlyingEnemy : MonoBehaviour
 
         }
 
+        if (tagName == DamageAreas.PLAYER_RIFFLE_BULLET)
+        {
+            StartCoroutine(DamageAnimation());
+            // Apply damage to the enemy
+            this.enemyHealth.AddDamage(DamageAreas.PLAYER_RIFFLE_BULLET_VALUE);
+            Destroy(other.gameObject);
+
+        }
+
+
         if (tagName == DamageAreas.PLASMA_BOMB_DAMAGE_AREA)
         {
             StartCoroutine(DamageAnimation());

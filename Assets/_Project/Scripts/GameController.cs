@@ -1,6 +1,8 @@
 using System;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /**
  * Control game states and waves
@@ -16,6 +18,76 @@ public class GameController : MonoBehaviour
     [Tooltip("Area offset for check enemies area.")]
     [SerializeField] private Vector3 centerOffset = new Vector3(0f,2.5f,0f); // Offset position for scan area to enemy count.
 
+    [Header("UI Elements")]
+    [Tooltip("Load when game Over")]
+    [SerializeField] private Canvas gameOverCanvas;
+    [Tooltip("Game over canvas scoreboard")]
+    [SerializeField] private TextMeshProUGUI scoreBoard;
+    [SerializeField] private TextMeshProUGUI waveNumberText;
+
+    [Header("Scene Names")]
+    [Tooltip("Name of the scene for the marketplace area.")]
+    [SerializeField] private string marketplaceSceneName = "MarketplaceScene";
+    
+    [Tooltip("Name of the scene for the battle arena.")]
+    [SerializeField] private string arenaSceneName = "ArenaScene";
+
+    public void LoadGameOverCanvas()
+    {
+        gameOverCanvas.gameObject.SetActive(true);
+        this.scoreBoard.text += "\n" + this.GetWaveState();
+    }
+
+    /// <summary>
+    /// Loads the marketplace scene.
+    /// </summary>
+    public void LoadMarketplaceScene()
+    {
+        Debug.Log("Loading Marketplace Scene: " + marketplaceSceneName);
+        SceneManager.LoadScene(marketplaceSceneName);
+    }
+
+    /// <summary>
+    /// Loads the main battle arena scene.
+    /// </summary>
+    public void LoadArenaScene()
+    {
+        Debug.Log("Loading Arena Scene: " + arenaSceneName);
+        SceneManager.LoadScene(arenaSceneName);
+    }
+
+    /// <summary>
+    /// Reloads the current active scene.
+    /// </summary>
+    public void ReloadCurrentScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        Debug.Log("Reloading Scene: " + currentSceneName);
+        SceneManager.LoadScene(currentSceneName);
+        Time.timeScale = 1f;
+    }
+
+    public void LoadMainScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    /// <summary>
+    /// Loads scene by name.
+    /// </summary>
+    public void LoadSceneByName(string sceneName)
+    {
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            Debug.Log("Loading Scene: " + sceneName);
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Debug.LogWarning("Scene name is null or empty.");
+        }
+    }
+    
     private String enemyTagPattern;
 
     private enum GameState {
@@ -41,6 +113,7 @@ public class GameController : MonoBehaviour
         this.enemyTagPattern = "^[A-Z][a-z]*Enemy$"; 
         this.waveState = 0;
         this.gameState = GameState.GameStarting;
+        this.gameOverCanvas.gameObject.SetActive(false);
     }
 
     void Update()
@@ -68,6 +141,7 @@ public class GameController : MonoBehaviour
     {
         waveState++;
         Debug.Log("Wave increased to: " + waveState);
+        this.waveNumberText.text = "" + (waveState+1);
     }
 
     void OnTriggerEnter(Collider other)
@@ -145,7 +219,7 @@ public class GameController : MonoBehaviour
         foreach(var collider in colliders)
         {
             string objectTag = collider.tag;
-            if(!string.IsNullOrEmpty(objectTag) && Regex.IsMatch(objectTag, enemyTagPattern))
+            if(!string.IsNullOrEmpty(objectTag) && (Regex.IsMatch(objectTag, enemyTagPattern) || objectTag == "WorldDestroyerEnemy"))
             {
                 count ++;
             }
